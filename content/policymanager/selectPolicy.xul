@@ -1,0 +1,165 @@
+<?xml version="1.0"?>
+
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://policymanager/content/policymanager.css" type="text/css"?>
+<!DOCTYPE window SYSTEM "chrome://policymanager/locale/">
+<dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+		xmlns:html="http://www.w3.org/1999/xhtml"
+		id="PolicySelectDialog"
+		windowtype="policymanager:PolicySelectDialog"
+		title="&PM.select.title;"
+		orient="vertical"
+		onfocus="if (!hasPolicies()) window.close();"
+		onload="init();"
+		buttons="accept,cancel"
+		ondialogaccept="onAccept();"
+		ondialogcancel="onCancel();">
+
+<stringbundle id="messages" src="chrome://policymanager/locale/policymanager.properties"/>
+
+<script type="application/x-javascript" src="pmUtility.js"/>
+<script type="application/x-javascript" src="policyService.js"/>
+
+
+
+
+
+
+<grid>
+	<columns>
+		<column/>
+		<column/>
+	</columns>
+	<rows>
+		<row>
+			<box orient="horizontal">
+				<spacer flex="1"/>
+				<label value="&PM.select.site;" control="site"/>
+			</box>
+			<box orient="horizontal">
+				<textbox id="site" flex="1"/>
+			</box>
+		</row>
+		<row>
+			<box orient="horizontal">
+				<spacer flex="1"/>
+				<label value="&PM.select.policy;" control="policies"/>
+			</box>
+			<box orient="horizontal">
+				<menulist id="policies" flex="1" style="min-width: 10em;">
+					<menupopup>
+						<menuitem label="&PM.default;" value="default"/>
+					</menupopup>
+				</menulist>
+				<button label="&PM.select.manage;" oncommand="goPolycyManager(true); createList(); initList();"/>
+			</box>
+		</row>
+	</rows>
+</grid>
+
+
+
+
+
+
+<script type="application/x-javascript"><![CDATA[
+
+
+function init()
+{
+	var opener = PolicyService.WindowManager.getMostRecentWindow('navigator:browser');
+	var focusedWindow = opener.document.commandDispatcher.focusedWindow;
+
+	if (
+		!focusedWindow ||
+		focusedWindow == opener ||
+		Components.lookupMethod(focusedWindow, 'top').call(focusedWindow) == opener
+		)
+		focusedWindow = opener.gBrowser.contentWindow;
+
+
+	document.getElementById('site').value = focusedWindow.location.href.match(/^\w+:\/\/[^\/]*/);
+
+	createList();
+
+	// ポリシー設定が一つもない場合、ポリシーマネージャを開く
+	if (!hasPolicies()) {
+		goPolycyManager(true);
+		createList();
+
+		// ポリシー設定が作られなかった場合、そのままダイアログを閉じる
+		if (!hasPolicies()) window.close();
+	}
+
+
+	initMenulist();
+
+	document.getElementById('policies').focus();
+}
+
+
+function hasPolicies()
+{
+	return (document.getElementsByAttribute('class', 'policy-item').length > 0);
+}
+
+function createList()
+{
+	var menulist = document.getElementById('policies');
+
+	var range = document.createRange();
+	range.selectNodeContents(menulist.firstChild);
+	range.setStartAfter(menulist.firstChild.firstChild);
+	range.deleteContents();
+	range.detach();
+
+	var policies = PolicyService.policies;
+	for (i in policies)
+	{
+		if (!policies[i]) continue;
+		menulist.firstChild.appendChild(document.createElement('menuitem'));
+		menulist.firstChild.lastChild.setAttribute('label', policies[i]);
+		menulist.firstChild.lastChild.setAttribute('value', policies[i]);
+		menulist.firstChild.lastChild.setAttribute('class', 'policy-item');
+	}
+}
+
+function initMenulist()
+{
+	var menulist = document.getElementById('policies');
+	var site     = document.getElementById('site').value,
+		sites,
+		i, j;
+
+	var policies = PolicyService.policies;
+	for (i in policies)
+	{
+		sites = PolicyService.getSitesForPolicy(policies[i]);
+		for (j in sites)
+			if (sites[j] == site) {
+				menulist.selectedItem = menulist.getElementsByAttribute('value', policies[i])[0];
+				return;
+			}
+	}
+
+	menulist.selectedIndex = 0;
+}
+
+
+
+function onAccept()
+{
+	PolicyService.addSiteToPolicy(
+		document.getElementById('site').value,
+		document.getElementById('policies').selectedItem.value
+	);
+	window.close();
+}
+
+function onCancel()
+{
+	window.close();
+}
+
+]]></script>
+</dialog>

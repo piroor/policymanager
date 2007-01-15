@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE window SYSTEM "chrome://policymanager/locale/">
+<overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+<popup id="contentAreaContextMenu">
+	<menuitem id="context-policymanager"
+		insertafter="context-metadata"
+		label="&PM.go;" 
+		oncommand="window.openDialog('chrome://policymanager/content/selectPolicy.xul', '_blank', 'chrome,modal,centerscreen');"/>
+</popup>
+
+<script type="application/x-javascript" src="pmUtility.js"/>
+<script type="application/x-javascript" src="policyService.js"/>
+<script type="application/x-javascript"><![CDATA[
+
+	function PolicyManagerInit()
+	{
+		// Translate from old version pref.
+		var globalJSEnabled = PolicyService.getPref('capability.policy.default.javascript.enabled');
+		if (globalJSEnabled === null || typeof globalJSEnabled != 'string') {
+			var policies = PolicyService.policies;
+			policies.push('default');
+			for (var i = 0, max = policies.length, enabled; i < max; i++)
+			{
+				policy  = encodeURIComponent(policies[i]);
+				enabled = PolicyService.getPref('capability.policy.'+policy+'.javascript.enabled');
+
+				if (enabled === null || typeof enabled === 'boolean') {
+					PolicyService.clearPref('capability.policy.'+policy+'.javascript.enabled');
+					PolicyService.setPref('capability.policy.'+policy+'.javascript.enabled', enabled ? 'allAccess' : 'noAccess');
+				}
+			}
+
+			PolicyService.setPref('capability.policy.'+policy+'.javascript.enabled', PolicyService.getPref('javascript.enabled') ? 'allAccess' : 'noAccess');
+
+			PolicyService.setPref('javascript.enabled', true);
+		}
+
+
+		var menupopup = document.getElementById('contentAreaContextMenu');
+		if (!menupopup) return;
+
+		menupopup.addEventListener('popupshowing', pmUpdateContextMenu, true);
+
+		if (location.href == 'chrome://browser/content/browser.xul') { // Firefox
+			var STRBUNDLE = Components.classes['@mozilla.org/intl/stringbundle;1'].getService(Components.interfaces.nsIStringBundleService);
+			var msg = STRBUNDLE.createBundle('chrome://policymanager/locale/policymanager.properties');
+
+			var javaItem = document.getElementById('java');
+
+			if (javaItem) {
+				var taskMpopup = javaItem.parentNode;
+
+				var item = taskMpopup.appendChild(document.createElement('menuitem'));
+				item.setAttribute('label', msg.GetStringFromName('tasksLabel'));
+				item.setAttribute('oncommand', 'goPolycyManager();');
+			}
+		}
+
+		window.addEventListener('unload', PolicyManagerDestruct, false);
+	}
+
+	function PolicyManagerDestruct()
+	{
+		document.getElementById('contentAreaContextMenu').removeEventListener('popupshowing', pmUpdateContextMenu, false);
+	}
+
+
+	function pmUpdateContextMenu()
+	{
+		var gCM = window.gContextMenu;
+		if (gCM)
+			document.getElementById('context-policymanager').hidden = (gCM.inDirList || gCM.isTextSelected || gCM.onTextInput);
+		return;
+	}
+
+
+	window.addEventListener('load', PolicyManagerInit, false);
+
+]]></script>
+
+</overlay>

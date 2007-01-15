@@ -1,0 +1,11 @@
+@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);
+@namespace html url(http://www.w3.org/1999/xhtml);
+
+
+#button-policy-add,
+#button-policy-edit,
+#button-policy-remove,
+#button-site-add,
+#button-site-remove {
+	min-width: 1em;
+}

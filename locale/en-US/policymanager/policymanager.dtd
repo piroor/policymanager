@@ -1,0 +1,81 @@
+<!ENTITY PM.title             "Policy Manager">
+
+
+<!ENTITY PM.go                "Policy for This Site">
+
+
+<!ENTITY PM.default           "Global Policy">
+
+
+<!ENTITY PM.manager.title        "Policy Manager">
+
+<!ENTITY PM.manager.policy.caption "Available Policies">
+<!ENTITY PM.manager.policy.column  "Policies">
+
+<!ENTITY PM.manager.policy.add    "Create New Policy">
+<!ENTITY PM.manager.policy.edit   "Edit Policy">
+<!ENTITY PM.manager.policy.remove "Delete Policy">
+
+<!ENTITY PM.manager.site.add    "Add new site to this list">
+<!ENTITY PM.manager.site.remove "Delete site from list">
+
+
+
+<!ENTITY PM.select.title      "Select Policy">
+<!ENTITY PM.select.manage     "Manage Policies">
+<!ENTITY PM.select.site       "Site:">
+<!ENTITY PM.select.policy     "Policy:">
+
+
+
+
+<!ENTITY PM.property.title      "Security Policy of &quot;&#37;s&quot;">
+
+<!ENTITY PM.property.tab1.label "General">
+<!ENTITY PM.property.tab2.label "Advanced JavaScript setting">
+
+
+
+<!ENTITY PM.property.JS.caption "JavaScript codes in these sites">
+<!ENTITY PM.property.JS.allow   "Enable">
+<!ENTITY PM.property.JS.deny    "Disable">
+
+<!ENTITY PM.property.cookie.caption "Cookies from these sites">
+<!ENTITY PM.property.cookie.default "Accept for Session">
+<!ENTITY PM.property.cookie.allow   "Accept">
+<!ENTITY PM.property.cookie.deny    "Block">
+
+<!ENTITY PM.property.image.caption "Images from these sites">
+<!ENTITY PM.property.image.default "as default policy">
+<!ENTITY PM.property.image.allow   "Load">
+<!ENTITY PM.property.image.deny    "Don't load">
+
+<!ENTITY PM.property.popup.caption "Popups from these sites">
+<!ENTITY PM.property.popup.allow   "Allow">
+<!ENTITY PM.property.popup.deny    "Block">
+
+<!ENTITY PM.property.install.caption "Software installation requests from these sites">
+<!ENTITY PM.property.install.allow   "Allow">
+<!ENTITY PM.property.install.deny    "Block">
+
+
+
+
+<!ENTITY PM.property.JS.caption        "JavaScript: Allow JavaScript to...">
+
+<!ENTITY PM.property.JS.allAccess      "Allow to access these properties with otehr sites' scripts">
+
+<!ENTITY PM.property.JS.location       "Load new pages/Reload pages">
+<!ENTITY PM.property.JS.open           "Open windows">
+<!ENTITY PM.property.JS.close          "Close windows">
+<!ENTITY PM.property.JS.focus          "Focus any targets">
+<!ENTITY PM.property.JS.position       "Move windows">
+<!ENTITY PM.property.JS.scroll         "Scroll pages">
+<!ENTITY PM.property.JS.resize         "Resize windows">
+<!ENTITY PM.property.JS.status         "Access the Status Bar">
+<!ENTITY PM.property.JS.screen         "Access the Screen object">
+<!ENTITY PM.property.JS.dialog         "Open dialogs">
+<!ENTITY PM.property.JS.window         "Access the Window object">
+<!ENTITY PM.property.JS.timer          "Set Timers">
+<!ENTITY PM.property.JS.events         "Capture events">
+

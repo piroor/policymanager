@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+
+<RDF:RDF xmlns:RDF="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+		xmlns:chrome="http://www.mozilla.org/rdf/chrome#">
+
+	<!-- list all the packages being supplied by this jar -->
+	<RDF:Seq about="urn:mozilla:package:root">
+		<RDF:li resource="urn:mozilla:package:policymanager"/>
+	</RDF:Seq>
+
+	<!-- package information -->
+	<RDF:Description about="urn:mozilla:package:policymanager"
+		chrome:displayName="Policy Manager"
+		chrome:author="SHIMODA Hiroshi"
+		chrome:name="policymanager"
+		chrome:extension="true"
+		chrome:description="Provides a dialog to customize policy settings."/>
+
+
+	<!-- overlay information -->
+	<RDF:Seq about="urn:mozilla:overlays">
+		<!-- Firefox -->
+		<RDF:li resource="chrome://browser/content/browser.xul"/>
+	</RDF:Seq>
+
+	<!-- Firefox -->
+	<RDF:Seq about="chrome://browser/content/browser.xul">
+		<RDF:li>chrome://policymanager/content/contextMenuOverlay.xul</RDF:li>
+		<RDF:li>chrome://policymanager/content/toolsOverlay.xul</RDF:li>
+	</RDF:Seq>
+
+</RDF:RDF>

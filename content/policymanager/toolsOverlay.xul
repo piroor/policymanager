@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE window SYSTEM "chrome://policymanager/locale/">
+<overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+<menupopup id="menu_ToolsPopup">
+	<menuitem insertbefore="prefSep"
+		label="&PM.title;" oncommand="goPolycyManager();"/>
+</menupopup>
+
+</overlay>

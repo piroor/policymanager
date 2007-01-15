@@ -1,0 +1,152 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://policymanager/content/policymanager.css" type="text/css"?>
+<!DOCTYPE window SYSTEM "chrome://policymanager/locale/">
+<dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+		xmlns:html="http://www.w3.org/1999/xhtml"
+		id="PolicyProperty"
+		windowtype="policymanager:PolicyProperty"
+		title=""
+		titleTemplate="&PM.property.title;"
+		orient="vertical"
+		persist="screenX screenY"
+		onload="init();"
+		buttons="accept,cancel"
+		ondialogaccept="onAccept();"
+		ondialogcancel="onCancel();">
+
+<script type="application/x-javascript" src="policyService.js"/>
+<script type="application/x-javascript" src="policyProperty.js"/>
+
+<broadcasterset>
+	<broadcaster id="JSItems"/>
+</broadcasterset>
+
+<tabbox>
+	<tabs>
+		<tab label="&PM.property.tab1.label;"/>
+		<tab label="&PM.property.tab2.label;" observes="JSItems"/>
+	</tabs>
+	<tabpanels>
+
+		<tabpanel orient="vertical" id="generalPanel">
+			<groupbox orient="vertical" id="jsPermission">
+				<caption label="&PM.property.JS.caption;"/>
+				<radiogroup id="JSPermissionRadio" orient="horizontal"
+					oncommand="onChangeJSRadio(this.value);">
+					<radio value="allAccess" label="&PM.property.JS.allow;"/>
+					<radio value="noAccess"  label="&PM.property.JS.deny;"/>
+				</radiogroup>
+			</groupbox>
+			<groupbox orient="vertical" id="cookiePermission">
+				<caption label="&PM.property.cookie.caption;"/>
+				<radiogroup id="CookiePermissionRadio" orient="horizontal"
+					oncommand="onChangeRadio('cookie', this.value);">
+					<radio value="0" label="&PM.property.cookie.default;"/>
+					<radio value="1" label="&PM.property.cookie.allow;"/>
+					<radio value="2" label="&PM.property.cookie.deny;"/>
+				</radiogroup>
+			</groupbox>
+			<groupbox orient="vertical" id="imagePermission">
+				<caption label="&PM.property.image.caption;"/>
+				<radiogroup id="ImagePermissionRadio" orient="horizontal"
+					oncommand="onChangeRadio('image', this.value);">
+					<radio value="0" label="&PM.property.image.default;" class="not-for-default"/>
+					<radio value="1" label="&PM.property.image.allow;"/>
+					<radio value="2" label="&PM.property.image.deny;"/>
+				</radiogroup>
+			</groupbox>
+			<groupbox orient="vertical" id="popupPermission">
+				<caption label="&PM.property.popup.caption;"/>
+				<radiogroup id="PopupPermissionRadio" orient="horizontal"
+					oncommand="onChangeRadio('popup', this.value);">
+					<radio value="1" label="&PM.property.popup.allow;"/>
+					<radio value="0" label="&PM.property.popup.deny;"/>
+				</radiogroup>
+			</groupbox>
+			<groupbox orient="vertical" id="installPermission">
+				<caption label="&PM.property.install.caption;"/>
+				<radiogroup id="InstallPermissionRadio" orient="horizontal"
+					oncommand="onChangeRadio('install', this.value);">
+					<radio value="1" label="&PM.property.install.allow;"/>
+					<radio value="0" label="&PM.property.install.deny;"/>
+				</radiogroup>
+			</groupbox>
+		</tabpanel>
+
+		<tabpanel orient="vertical">
+			<groupbox id="JS-group" orient="vertical">
+				<caption label="&PM.property.JS.caption;"/>
+				<box orient="vertical">
+					<checkbox label="&PM.property.JS.allAccess;"
+						id="JS-allAccess"
+						observes="JSItems"
+						oncommand="changePermissionJS()"/>
+				</box>
+				<grid oncommand="setPermissionJS(event.target);">
+					<rows><row/><row/></rows><columns>
+					<column flex="1">
+						<checkbox label="&PM.property.JS.open;"
+							observes="JSItems"
+							jspref="open"
+							prefs="Window.open"/>
+						<checkbox label="&PM.property.JS.close;"
+							observes="JSItems"
+							jspref="close"
+							prefs="Window.close"/>
+						<checkbox label="&PM.property.JS.dialog;"
+							observes="JSItems"
+							jspref="dialog"
+							prefs="Window.alert Window.confirm Window.prompt Window.openDialog"/>
+						<checkbox label="&PM.property.JS.focus;"
+							observes="JSItems"
+							jspref="focus"
+							prefs="Window.focus Window.blur"/>
+						<checkbox label="&PM.property.JS.window;"
+							observes="JSItems"
+							jspref="window"
+							prefs="Window.self Window.opener Window.window"/>
+						<checkbox label="&PM.property.JS.status;"
+							observes="JSItems"
+							jspref="status"
+							prefs="Window.status Window.defaultStatus"/>
+						<checkbox label="&PM.property.JS.position;"
+							observes="JSItems"
+							jspref="position"
+							prefs="Window.pageXOffset Window.pageYOffset Window.scroll Window.scrollBy Window.scrollTo Window.scrollX Window.scrollY"/>
+					</column>
+					<column flex="1">
+						<checkbox label="&PM.property.JS.scroll;"
+							observes="JSItems"
+							jspref="scroll"
+							prefs="Window.moveBy Window.moveTo"/>
+						<checkbox label="&PM.property.JS.resize;"
+							observes="JSItems"
+							jspref="resize"
+							prefs="Window.screenX.set Window.screenY.set Window.resizeBy Window.resizeTo Window.sizeToContent Window.innerHeight.set Window.innerWidth.set Window.outerHeight.set Window.outerWidth.set"/>
+						<checkbox label="&PM.property.JS.screen;"
+							observes="JSItems"
+							jspref="screen"
+							prefs="Screen.availHeight Screen.availLeft Screen.availTop Screen.availWidth Screen.colorDepth Screen.height Screen.left Screen.pixelDepth Screen.top Screen.width Window.screenX.set Window.scrrenY.set"/>
+						<checkbox label="&PM.property.JS.timer;"
+							observes="JSItems"
+							jspref="timer"
+							prefs="Window.setTimeout Window.setInterval"/>
+						<checkbox label="&PM.property.JS.location;"
+							observes="JSItems"
+							jspref="location"
+							prefs="Location.hash.set Location.href.set Location.reload Location.replace"/>
+						<checkbox label="&PM.property.JS.events;"
+							observes="JSItems"
+							jspref="events"
+							prefs="HTMLDocument.captureEvents HTMLDocument.releaseEvents HTMLDocument.routeEvent HTMLDocument.createEvent HTMLDocument.addEventListener HTMLDocument.removeEventListener HTMLDocument.dispatchEvent"/>
+					</column>
+				</columns></grid>
+			</groupbox>
+		</tabpanel>
+
+	</tabpanels>
+</tabbox>
+
+
+</dialog>

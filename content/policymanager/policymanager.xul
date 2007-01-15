@@ -1,0 +1,121 @@
+<?xml version="1.0"?>
+
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://policymanager/content/policymanager.css" type="text/css"?>
+
+<!DOCTYPE dialog SYSTEM "chrome://policymanager/locale/">
+
+<dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+		xmlns:html="http://www.w3.org/1999/xhtml"
+		id="PolicyManagerDialog"
+		windowtype="policymanager:ManagerDialog"
+		title="&PM.manager.title;"
+		orient="vertical"
+		persist="screenX screenY width height"
+		onload="init();"
+		buttons="accept"
+		ondialogaccept="window.close();">
+
+	<script type="application/x-javascript" src="chrome://global/content/globalOverlay.js"/>
+	<script type="application/x-javascript" src="chrome://global/content/nsDragAndDrop.js"/>
+	<script type="application/x-javascript" src="chrome://global/content/nsTransferable.js"/>
+
+	<script type="application/x-javascript" src="policyService.js"/>
+	<script type="application/x-javascript" src="policymanager.js"/>
+
+	<broadcasterset>
+		<broadcaster id="notForDefaultItems"/>
+		<broadcaster id="notForPolicyItems"/>
+	</broadcasterset>
+
+	<commandset>
+		<command id="command-add-policy" oncommand="addPolicy();"/>
+		<command id="command-edit-policy" oncommand="editPolicy();"/>
+		<command id="command-remove-policy" oncommand="removePolicy();"
+			observes="notForDefaultItems"/>
+
+		<command id="command-add-site" oncommand="addSite();"
+			observes="notForDefaultItems"/>
+		<command id="command-remove-site" oncommand="removeSite();"
+			observes="notForPolicyItems"/>
+	</commandset>
+
+	<popupset>
+		<popup id="treePopup">
+			<menuitem label="&PM.manager.policy.add;"
+				command="command-add-policy"/>
+			<menuitem label="&PM.manager.policy.edit;"
+				command="command-edit-policy"/>
+			<menuitem label="&PM.manager.policy.remove;"
+				observes="notForDefaultItems"
+				command="command-remove-policy"/>
+			<menuseparator/>
+			<menuitem label="&PM.manager.site.add;"
+				observes="notForDefaultItems"
+				command="command-add-site"/>
+			<menuitem label="&PM.manager.site.remove;"
+				observes="notForPolicyItems"
+				command="command-remove-site"/>
+		</popup>
+	</popupset>
+
+	<groupbox orient="vertical" flex="1">
+		<caption label="&PM.manager.policy.caption;"/>
+		<hbox flex="1">
+			<vbox>
+				<spacer flex="1"/>
+				<button id="button-policy-add"
+					label="&PM.manager.policy.add;"
+					command="command-add-policy"/>
+				<button id="button-policy-edit"
+					label="&PM.manager.policy.edit;"
+					command="command-edit-policy"/>
+				<spacer style="height: 1em;"/>
+				<button id="button-policy-remove"
+					observes="notForDefaultItems"
+					label="&PM.manager.policy.remove;"
+					command="command-remove-policy"/>
+				<spacer flex="2"/>
+			</vbox>
+			<vbox flex="1"
+					style="min-width: 10em; min-height: 15em;">
+				<tree id="policies"
+					seltype="single"
+					hidecolumnpicker="true"
+					flex="1"
+					onclick="onClick(event);"
+					ondblclick="onDblClick(event);"
+					onselect="onSelect(event);"
+					ondraggesture="nsDragAndDrop.startDrag(event, treeDNDObserver);"
+					ondragover="nsDragAndDrop.dragOver(event, treeDNDObserver);"
+					ondragexit="nsDragAndDrop.dragExit(event, treeDNDObserver);"
+					ondragdrop="treeDNDObserver.onDrop(event);"
+					context="treePopup">
+					<treecols>
+						<treecol label="&PM.manager.policy.column;" flex="1" primary="true"/>
+					</treecols>
+					<treechildren id="policies-root">
+						<treeitem id="policy-default" class="policy-item">
+							<treerow>
+								<treecell label="&PM.default;" value="default"/>
+							</treerow>
+						</treeitem>
+					</treechildren>
+				</tree>
+				<hbox id="site-buttons"
+					observes="notForDefaultItems">
+					<spacer flex="1"/>
+					<button id="button-site-add"
+						label="&PM.manager.site.add;"
+						command="command-add-site"/>
+					<button id="button-site-remove"
+						label="&PM.manager.site.remove;"
+						observes="notForPolicyItems"
+						command="command-remove-site"/>
+					<spacer flex="1"/>
+				</hbox>
+			</vbox>
+		</hbox>
+	</groupbox>
+
+</dialog>

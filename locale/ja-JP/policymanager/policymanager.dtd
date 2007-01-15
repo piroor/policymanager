@@ -1,0 +1,79 @@
+<!ENTITY PM.title             "ポリシーマネージャ">
+
+<!ENTITY PM.go                "このサイトのポリシー設定">
+
+
+<!ENTITY PM.default           "グローバル設定">
+
+
+<!ENTITY PM.manager.title          "ポリシーマネージャ">
+
+<!ENTITY PM.manager.policy.caption "利用可能なポリシー">
+<!ENTITY PM.manager.policy.column  "ポリシー">
+
+<!ENTITY PM.manager.policy.add    "新しいポリシーを作成">
+<!ENTITY PM.manager.policy.edit   "ポリシーを編集">
+<!ENTITY PM.manager.policy.remove "ポリシーを削除">
+
+<!ENTITY PM.manager.site.add    "新しいサイトをリストに加える">
+<!ENTITY PM.manager.site.remove "このサイトをリストから外す">
+
+
+
+
+<!ENTITY PM.select.title      "ポリシー設定を選んで下さい">
+<!ENTITY PM.select.manage     "ポリシー設定の管理">
+<!ENTITY PM.select.site       "サイト：">
+<!ENTITY PM.select.policy     "ポリシー：">
+
+
+
+
+<!ENTITY PM.property.title    "&quot;&#37;s&quot;のセキュリティポリシー">
+
+<!ENTITY PM.property.tab1.label "一般">
+<!ENTITY PM.property.tab2.label "JavaScriptの詳細な設定">
+
+
+
+<!ENTITY PM.property.JS.caption "このポリシーを設定されたサイトのJavaScript">
+<!ENTITY PM.property.JS.allow   "実行する">
+<!ENTITY PM.property.JS.deny    "禁止する">
+
+<!ENTITY PM.property.cookie.caption "このポリシーを設定されたサイトからのCookie">
+<!ENTITY PM.property.cookie.default "一時的に受け入れる">
+<!ENTITY PM.property.cookie.allow   "恒久的に受け入れる">
+<!ENTITY PM.property.cookie.deny    "拒否する">
+
+<!ENTITY PM.property.image.caption "このポリシーを設定されたサイトからの画像">
+<!ENTITY PM.property.image.default "グローバル設定に従う">
+<!ENTITY PM.property.image.allow   "読み込む">
+<!ENTITY PM.property.image.deny    "読み込まない">
+
+<!ENTITY PM.property.popup.caption "このポリシーを設定されたサイトからのポップアップ">
+<!ENTITY PM.property.popup.allow   "許可する">
+<!ENTITY PM.property.popup.deny    "禁止する">
+
+<!ENTITY PM.property.install.caption "このポリシーを設定されたサイトからのソフトウェアのインストール">
+<!ENTITY PM.property.install.allow   "許可する">
+<!ENTITY PM.property.install.deny    "禁止する">
+
+
+<!ENTITY PM.property.JS.caption          "JavaScriptで以下の操作を許可する">
+
+<!ENTITY PM.property.JS.allAccess      "他のサイトのスクリプトからも操作を許可する">
+
+<!ENTITY PM.property.JS.location       "ページの読み込み/リロード">
+<!ENTITY PM.property.JS.open           "ウィンドウを開く">
+<!ENTITY PM.property.JS.close          "ウィンドウを閉じる">
+<!ENTITY PM.property.JS.focus          "フォーカスの移動">
+<!ENTITY PM.property.JS.position       "ウィンドウの移動">
+<!ENTITY PM.property.JS.scroll         "ページのスクロール">
+<!ENTITY PM.property.JS.resize         "ウィンドウサイズの変更">
+<!ENTITY PM.property.JS.status         "ステータスバーへのアクセス">
+<!ENTITY PM.property.JS.screen         "Screenオブジェクトへのアクセス">
+<!ENTITY PM.property.JS.dialog         "ダイアログを開く">
+<!ENTITY PM.property.JS.window         "Windowオブジェクトへのアクセス">
+<!ENTITY PM.property.JS.timer          "タイマーの使用">
+<!ENTITY PM.property.JS.events         "イベントの捕捉">
+
