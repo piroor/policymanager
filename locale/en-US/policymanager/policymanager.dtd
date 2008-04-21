@@ -58,6 +58,10 @@
 <!ENTITY PM.property.install.allow   "Allow">
 <!ENTITY PM.property.install.deny    "Block">
 
+<!ENTITY PM.property.localFileAccess.caption "Accessing to local files from these sites">
+<!ENTITY PM.property.localFileAccess.allow   "Allow">
+<!ENTITY PM.property.localFileAccess.deny    "Block">
+
 
 
 

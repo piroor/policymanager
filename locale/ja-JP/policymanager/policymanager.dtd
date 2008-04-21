@@ -58,6 +58,10 @@
 <!ENTITY PM.property.install.allow   "許可する">
 <!ENTITY PM.property.install.deny    "禁止する">
 
+<!ENTITY PM.property.localFileAccess.caption "このポリシーを設定されたサイトからのローカルファイルへのアクセス">
+<!ENTITY PM.property.localFileAccess.allow   "許可する">
+<!ENTITY PM.property.localFileAccess.deny    "禁止する">
+
 
 <!ENTITY PM.property.JS.caption          "JavaScriptで以下の操作を許可する">
 

@@ -30,6 +30,9 @@ function init()
 	node = document.getElementById('InstallPermissionRadio');
 	node.selectedItem = node.getElementsByAttribute('value', gData.install)[0];
 
+	node = document.getElementById('LocalFileAccessRadio');
+	node.selectedItem = node.getElementsByAttribute('value', gData.localFileAccess)[0];
+
 
 	var radio     = document.getElementsByAttribute('class', 'not-for-default');
 	var max       = radio.length;
@@ -61,7 +64,6 @@ function init()
 		node.setAttribute('disabled', true);
 	else
 		node.removeAttribute('disabled');
-
 
 
 

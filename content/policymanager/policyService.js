@@ -294,6 +294,10 @@ var PolicyService = {
 								this.getPref(root+'.__permission__.install')
 							)
 						)
+						),
+
+				localFileAccess : (
+							this.getPref(root+'.checkloaduri.enabled') || 'noAccess'
 						)
 			};
 
@@ -373,6 +377,13 @@ var PolicyService = {
 					this.setPref('xpinstall.enabled', data.updated.install == 1);
 				else
 					this.setPermissionFor(aPolicy, 'install', data.updated.install);
+			}
+
+			if ('localFileAccess' in data.updated) {
+				if (typeof this.getPref(root+'.checkloaduri.enabled') != 'string')
+					this.clearPref(root+'.checkloaduri.enabled');
+
+				this.setPref(root+'.checkloaduri.enabled', data.updated.localFileAccess);
 			}
 
 

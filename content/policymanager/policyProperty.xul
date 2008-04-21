@@ -72,6 +72,14 @@
 					<radio value="0" label="&PM.property.install.deny;"/>
 				</radiogroup>
 			</groupbox>
+			<groupbox orient="vertical" id="localFileAccess">
+				<caption label="&PM.property.localFileAccess.caption;"/>
+				<radiogroup id="LocalFileAccessRadio" orient="horizontal"
+					oncommand="onChangeRadio('localFileAccess', this.value);">
+					<radio value="allAccess" label="&PM.property.localFileAccess.allow;"/>
+					<radio value="sameOrigin" label="&PM.property.localFileAccess.deny;"/>
+				</radiogroup>
+			</groupbox>
 		</tabpanel>
 
 		<tabpanel orient="vertical">
