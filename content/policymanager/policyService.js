@@ -31,13 +31,17 @@ var PolicyService = {
 	// 利用できるポリシー 
 	get policies()
 	{
-		var array = (this.getPref('capability.policy.policynames') || '').split(/[,|]| +/);
+		var array = (this.getPref('capability.policy.policynames') || '').split(/[,|]|\s+/);
+		var result = [];
 		for (var i in array)
+		{
 			array[i] = decodeURIComponent(array[i]);
+			if (array[i]) result.push(array[i]);
+		}
 
-		array.sort();
+		result.sort();
 
-		return array;
+		return result;
 	},
  
 	get recentURI()
@@ -225,7 +229,7 @@ var PolicyService = {
 	// スペース区切りの値リストから値を削除する 
 	removeValueFrom : function(aPrefstring, aValue)
 	{
-		var values = (this.getPref(aPrefstring) || '').split(/[,|]| +/);
+		var values = (this.getPref(aPrefstring) || '').split(/[,|]|\s+/);
 		for (var i in values)
 			if (values[i] == aValue) {
 				values.splice(i, 1);

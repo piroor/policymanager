@@ -18,7 +18,11 @@
 	{
 		// Translate from old version pref.
 		var globalJSEnabled = PolicyService.getPref('capability.policy.default.javascript.enabled');
-		if (globalJSEnabled === null || typeof globalJSEnabled != 'string') {
+		if (
+			globalJSEnabled === null ||
+			typeof globalJSEnabled != 'string' ||
+			(String(PolicyService.getPref('capability.policy.policynames')).indexOf('default') < 0)
+			) {
 			var policies = PolicyService.policies;
 			policies.push('default');
 			for (var i = 0, max = policies.length, enabled; i < max; i++)
@@ -31,6 +35,8 @@
 					PolicyService.setPref('capability.policy.'+policy+'.javascript.enabled', enabled ? 'allAccess' : 'noAccess');
 				}
 			}
+			// clear garbage
+			PolicyService.clearPref('capability.policy..javascript.enabled');
 
 			PolicyService.setPref('capability.policy.'+policy+'.javascript.enabled', PolicyService.getPref('javascript.enabled') ? 'allAccess' : 'noAccess');
 
