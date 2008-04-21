@@ -297,7 +297,14 @@ var PolicyService = {
 						),
 
 				localFileAccess : (
-							this.getPref(root+'.checkloaduri.enabled') || 'noAccess'
+							this.getPref(root+'.checkloaduri.enabled') || 'sameOrigin'
+						),
+
+				clipboard : (
+							(
+								this.getPref(root+'.Clipboard.paste') == 'allAccess' &&
+								this.getPref(root+'.Clipboard.cutcopy') == 'allAccess'
+							) ? 'allAccess' : 'sameOrigin'
 						)
 			};
 
@@ -384,6 +391,11 @@ var PolicyService = {
 					this.clearPref(root+'.checkloaduri.enabled');
 
 				this.setPref(root+'.checkloaduri.enabled', data.updated.localFileAccess);
+			}
+
+			if ('clipboard' in data.updated) {
+				this.setPref(root+'.Clipboard.cutcopy', data.updated.clipboard);
+				this.setPref(root+'.Clipboard.paste', data.updated.clipboard);
 			}
 
 

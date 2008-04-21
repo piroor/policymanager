@@ -9,3 +9,7 @@
 #button-site-remove {
 	min-width: 1em;
 }
+
+hbox, row {
+	-moz-box-align: center;
+}

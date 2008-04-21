@@ -36,31 +36,35 @@
 
 
 
-<!ENTITY PM.property.JS.caption "このポリシーを設定されたサイトのJavaScript">
+<!ENTITY PM.property.JS.caption "JavaScriptの実行">
 <!ENTITY PM.property.JS.allow   "実行する">
 <!ENTITY PM.property.JS.deny    "禁止する">
 
-<!ENTITY PM.property.cookie.caption "このポリシーを設定されたサイトからのCookie">
+<!ENTITY PM.property.cookie.caption "Cookieの保存">
 <!ENTITY PM.property.cookie.default "一時的に受け入れる">
 <!ENTITY PM.property.cookie.allow   "恒久的に受け入れる">
 <!ENTITY PM.property.cookie.deny    "拒否する">
 
-<!ENTITY PM.property.image.caption "このポリシーを設定されたサイトからの画像">
+<!ENTITY PM.property.image.caption "画像の読み込み">
 <!ENTITY PM.property.image.default "グローバル設定に従う">
 <!ENTITY PM.property.image.allow   "読み込む">
 <!ENTITY PM.property.image.deny    "読み込まない">
 
-<!ENTITY PM.property.popup.caption "このポリシーを設定されたサイトからのポップアップ">
+<!ENTITY PM.property.popup.caption "ポップアップ">
 <!ENTITY PM.property.popup.allow   "許可する">
 <!ENTITY PM.property.popup.deny    "禁止する">
 
-<!ENTITY PM.property.install.caption "このポリシーを設定されたサイトからのソフトウェアのインストール">
+<!ENTITY PM.property.install.caption "ソフトウェアのインストール">
 <!ENTITY PM.property.install.allow   "許可する">
 <!ENTITY PM.property.install.deny    "禁止する">
 
-<!ENTITY PM.property.localFileAccess.caption "このポリシーを設定されたサイトからのローカルファイルへのアクセス">
+<!ENTITY PM.property.localFileAccess.caption "ローカルファイルへのアクセス">
 <!ENTITY PM.property.localFileAccess.allow   "許可する">
 <!ENTITY PM.property.localFileAccess.deny    "禁止する">
+
+<!ENTITY PM.property.clipboard.caption "クリップボードの内容へのアクセス">
+<!ENTITY PM.property.clipboard.allow   "許可する">
+<!ENTITY PM.property.clipboard.deny    "禁止する">
 
 
 <!ENTITY PM.property.JS.caption          "JavaScriptで以下の操作を許可する">

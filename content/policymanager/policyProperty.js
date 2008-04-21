@@ -33,6 +33,9 @@ function init()
 	node = document.getElementById('LocalFileAccessRadio');
 	node.selectedItem = node.getElementsByAttribute('value', gData.localFileAccess)[0];
 
+	node = document.getElementById('ClipboardRadio');
+	node.selectedItem = node.getElementsByAttribute('value', gData.clipboard)[0];
+
 
 	var radio     = document.getElementsByAttribute('class', 'not-for-default');
 	var max       = radio.length;

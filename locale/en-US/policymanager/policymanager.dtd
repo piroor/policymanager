@@ -36,31 +36,35 @@
 
 
 
-<!ENTITY PM.property.JS.caption "JavaScript codes in these sites">
+<!ENTITY PM.property.JS.caption "JavaScript">
 <!ENTITY PM.property.JS.allow   "Enable">
 <!ENTITY PM.property.JS.deny    "Disable">
 
-<!ENTITY PM.property.cookie.caption "Cookies from these sites">
+<!ENTITY PM.property.cookie.caption "Cookies">
 <!ENTITY PM.property.cookie.default "Accept for Session">
 <!ENTITY PM.property.cookie.allow   "Accept">
 <!ENTITY PM.property.cookie.deny    "Block">
 
-<!ENTITY PM.property.image.caption "Images from these sites">
+<!ENTITY PM.property.image.caption "Images">
 <!ENTITY PM.property.image.default "as default policy">
 <!ENTITY PM.property.image.allow   "Load">
 <!ENTITY PM.property.image.deny    "Don't load">
 
-<!ENTITY PM.property.popup.caption "Popups from these sites">
+<!ENTITY PM.property.popup.caption "Popups">
 <!ENTITY PM.property.popup.allow   "Allow">
 <!ENTITY PM.property.popup.deny    "Block">
 
-<!ENTITY PM.property.install.caption "Software installation requests from these sites">
+<!ENTITY PM.property.install.caption "Software installation requests">
 <!ENTITY PM.property.install.allow   "Allow">
 <!ENTITY PM.property.install.deny    "Block">
 
-<!ENTITY PM.property.localFileAccess.caption "Accessing to local files from these sites">
+<!ENTITY PM.property.localFileAccess.caption "Accessing to local files">
 <!ENTITY PM.property.localFileAccess.allow   "Allow">
 <!ENTITY PM.property.localFileAccess.deny    "Block">
+
+<!ENTITY PM.property.clipboard.caption "Accessing to clipboard's contents">
+<!ENTITY PM.property.clipboard.allow   "Allow">
+<!ENTITY PM.property.clipboard.deny    "Block">
 
 
 

@@ -30,56 +30,64 @@
 	<tabpanels>
 
 		<tabpanel orient="vertical" id="generalPanel">
-			<groupbox orient="vertical" id="jsPermission">
-				<caption label="&PM.property.JS.caption;"/>
+			<grid>
+			<columns>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+			<row id="jsPermission">
+				<label value="&PM.property.JS.caption;"/>
 				<radiogroup id="JSPermissionRadio" orient="horizontal"
 					oncommand="onChangeJSRadio(this.value);">
 					<radio value="allAccess" label="&PM.property.JS.allow;"/>
 					<radio value="noAccess"  label="&PM.property.JS.deny;"/>
 				</radiogroup>
-			</groupbox>
-			<groupbox orient="vertical" id="cookiePermission">
-				<caption label="&PM.property.cookie.caption;"/>
+			</row>
+			<row id="cookiePermission">
+				<label value="&PM.property.cookie.caption;"/>
 				<radiogroup id="CookiePermissionRadio" orient="horizontal"
 					oncommand="onChangeRadio('cookie', this.value);">
 					<radio value="0" label="&PM.property.cookie.default;"/>
 					<radio value="1" label="&PM.property.cookie.allow;"/>
 					<radio value="2" label="&PM.property.cookie.deny;"/>
 				</radiogroup>
-			</groupbox>
-			<groupbox orient="vertical" id="imagePermission">
-				<caption label="&PM.property.image.caption;"/>
+			</row>
+			<row id="imagePermission">
+				<label value="&PM.property.image.caption;"/>
 				<radiogroup id="ImagePermissionRadio" orient="horizontal"
 					oncommand="onChangeRadio('image', this.value);">
 					<radio value="0" label="&PM.property.image.default;" class="not-for-default"/>
 					<radio value="1" label="&PM.property.image.allow;"/>
 					<radio value="2" label="&PM.property.image.deny;"/>
 				</radiogroup>
-			</groupbox>
-			<groupbox orient="vertical" id="popupPermission">
-				<caption label="&PM.property.popup.caption;"/>
+			</row>
+			<row id="popupPermission">
+				<label value="&PM.property.popup.caption;"/>
 				<radiogroup id="PopupPermissionRadio" orient="horizontal"
 					oncommand="onChangeRadio('popup', this.value);">
 					<radio value="1" label="&PM.property.popup.allow;"/>
 					<radio value="0" label="&PM.property.popup.deny;"/>
 				</radiogroup>
-			</groupbox>
-			<groupbox orient="vertical" id="installPermission">
-				<caption label="&PM.property.install.caption;"/>
+			</row>
+			<row id="installPermission">
+				<label value="&PM.property.install.caption;"/>
 				<radiogroup id="InstallPermissionRadio" orient="horizontal"
 					oncommand="onChangeRadio('install', this.value);">
 					<radio value="1" label="&PM.property.install.allow;"/>
 					<radio value="0" label="&PM.property.install.deny;"/>
 				</radiogroup>
-			</groupbox>
-			<groupbox orient="vertical" id="localFileAccess">
-				<caption label="&PM.property.localFileAccess.caption;"/>
+			</row>
+			<row id="localFileAccess">
+				<label value="&PM.property.localFileAccess.caption;"/>
 				<radiogroup id="LocalFileAccessRadio" orient="horizontal"
 					oncommand="onChangeRadio('localFileAccess', this.value);">
 					<radio value="allAccess" label="&PM.property.localFileAccess.allow;"/>
 					<radio value="sameOrigin" label="&PM.property.localFileAccess.deny;"/>
 				</radiogroup>
-			</groupbox>
+			</row>
+			</rows>
+			</grid>
 		</tabpanel>
 
 		<tabpanel orient="vertical">
@@ -151,6 +159,14 @@
 					</column>
 				</columns></grid>
 			</groupbox>
+			<hbox id="clipboard">
+				<label value="&PM.property.clipboard.caption;"/>
+				<radiogroup id="ClipboardRadio" orient="horizontal"
+					oncommand="onChangeRadio('clipboard', this.value);">
+					<radio value="allAccess" label="&PM.property.clipboard.allow;"/>
+					<radio value="sameOrigin" label="&PM.property.clipboard.deny;"/>
+				</radiogroup>
+			</hbox>
 		</tabpanel>
 
 	</tabpanels>
