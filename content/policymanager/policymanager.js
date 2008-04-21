@@ -190,6 +190,7 @@ function resetPolicyTree()
 			siteItem.firstChild.appendChild(document.createElement('treecell'));
 			siteItem.firstChild.firstChild.setAttribute('label', sites[j]);
 			siteItem.firstChild.firstChild.setAttribute('value', sites[j]);
+			siteItem.firstChild.firstChild.setAttribute('src', PolicyService.getFaviconFor(sites[j]));
 
 			policyItem.lastChild.appendChild(siteItem);
 		}

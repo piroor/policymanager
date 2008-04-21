@@ -1,7 +1,7 @@
 var PolicyService = { 
-	
+	 
 	// properties 
-	
+	 
 	// 定数 
 
 	CLEAR   : -1,
@@ -44,7 +44,7 @@ var PolicyService = {
 		return result;
 	},
  
-	get recentURI()
+	get recentURI() 
 	{
 		var win = this.WindowManager.getMostRecentWindow('navigator:browser');
 		return (!win || !win.gBrowser) ? null : win.gBrowser.currentURI.spec ;
@@ -59,6 +59,21 @@ var PolicyService = {
 		return this._strbundle;
 	},
 	_strbundle : null,
+ 
+	get faviconService() 
+	{
+		if (this._faviconService === null) {
+			try {
+					this._faviconService = Components.classes['@mozilla.org/browser/favicon-service;1']
+						.getService(Components.interfaces.nsIFaviconService);
+				}
+				catch(e) {
+					this._faviconService = void(0);
+				}
+		}
+		return this._faviconService;
+	},
+	_faviconService : null,
  
 	// XPConnect 
 	
@@ -192,7 +207,7 @@ var PolicyService = {
 	_PromptService : null,
    
 	// 汎用関数 
-	
+	 
 	makeURIFromSpec : function(aURI) 
 	{
 		try {
@@ -239,7 +254,18 @@ var PolicyService = {
 
 		return false;
 	},
-  
+ 
+	getFaviconFor : function(aURI) 
+	{
+		if (this.faviconService) {
+			var uri = this.faviconService.getFaviconForPage(this.makeURIFromSpec(aURI));
+			if (uri)
+				return uri.spec;
+		}
+
+		return '';
+	},
+ 	 
 	// ポリシーの操作 
 	
 	// ポリシーの定義データを得る 
