@@ -257,15 +257,55 @@ var PolicyService = {
  
 	getFaviconFor : function(aURI) 
 	{
-		if (this.faviconService) {
-			var uri = this.faviconService.getFaviconForPage(this.makeURIFromSpec(aURI));
-			if (uri)
-				return uri.spec;
+		var icon = '';
+		if (this.faviconService) { // Firefox 3
+			try {
+				var uri = this.faviconService.getFaviconForPage(this.makeURIFromSpec(aURI));
+				if (uri)
+					return uri.spec;
+			}
+			catch(e) {
+			}
+			return icon;
 		}
 
-		return '';
+		var uri = this.makeURIFromSpec(aURI);
+		if (!uri) return icon;
+
+		uri = uri.prePath + '/favicon.ico';
+		if (!this.isIconKnownMissing(uri)) return uri;
+
+		return icon;
 	},
- 	 
+	 
+	isIconKnownMissing : function(aKey) 
+	{
+		try {
+			if (!this.mMissedIconCache) {
+				var cacheService = Components.classes['@mozilla.org/network/cache-service;1']
+						.getService(Components.interfaces.nsICacheService);
+				this.mMissedIconCache = cacheService.createSession(
+					'MissedIconCache',
+					Components.interfaces.nsICache.STORE_ANYWHERE,
+					true
+				);
+				if (!this.mMissedIconCache) return null;
+			}
+			var entry = this.mMissedIconCache.openCacheEntry(
+					aKey,
+					Components.interfaces.nsICache.ACCESS_READ,
+					true
+				);
+			if (entry) {
+				entry.close();
+				return true;
+			}
+		}
+		catch (e) {
+			return false;
+		}
+	},
+  	 
 	// ポリシーの操作 
 	
 	// ポリシーの定義データを得る 

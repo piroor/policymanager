@@ -170,6 +170,7 @@ function resetPolicyTree()
 		policyItem.appendChild(document.createElement('treerow'));
 		policyItem.firstChild.appendChild(document.createElement('treecell'));
 		policyItem.firstChild.firstChild.setAttribute('value', policies[i]);
+		policyItem.firstChild.firstChild.setAttribute('properties', 'policy');
 
 		policyItem.appendChild(document.createElement('treechildren'));
 
@@ -230,11 +231,9 @@ function updateState()
 	var siteButtonsBox = document.getElementById('site-buttons');
 	if (isDefault) {
 		notForDefault.setAttribute('disabled', true);
-		siteButtonsBox.setAttribute('collapsed', true);
 	}
 	else {
 		notForDefault.removeAttribute('disabled');
-		siteButtonsBox.removeAttribute('collapsed');
 	}
 
 	if (isDefault || !site)

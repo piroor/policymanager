@@ -9,3 +9,19 @@
 #button-site-remove {
 	min-width: 1em;
 }
+
+treechildren::-moz-tree-image() {
+	list-style-image: url(chrome://global/skin/icons/folder-item.png);
+/*	list-style-image: url(jar:resource:///chrome/classic.jar!/skin/classic/global/icons/folder-item.png);*/
+	-moz-image-region: rect(0, 16px, 16px, 0);
+	max-width: 16px;
+	max-height: 16px;
+}
+
+treechildren::-moz-tree-image(policy) {
+	-moz-image-region: rect(0, 32px, 16px, 16px);
+}
+
+treechildren::-moz-tree-image(policy, open) {
+	-moz-image-region: rect(16px, 32px, 32px, 16px);
+}
