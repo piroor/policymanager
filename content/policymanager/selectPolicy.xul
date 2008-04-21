@@ -31,7 +31,7 @@
 		<column/>
 	</columns>
 	<rows>
-		<row>
+		<row align="center">
 			<box orient="horizontal">
 				<spacer flex="1"/>
 				<label value="&PM.select.site;" control="site"/>
@@ -40,7 +40,7 @@
 				<textbox id="site" flex="1"/>
 			</box>
 		</row>
-		<row>
+		<row align="center">
 			<box orient="horizontal">
 				<spacer flex="1"/>
 				<label value="&PM.select.policy;" control="policies"/>
