@@ -1,4 +1,4 @@
-var version     = '2.0.2008042101',
+var version     = '2.1.2008042101',
 	displayName = 'Policy Manager',
 	appName     = 'policymanager',
 	author      = 'SHIMODA Hiroshi',
