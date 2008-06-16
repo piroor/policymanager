@@ -1,0 +1,8 @@
+
+overlay	chrome://browser/content/browser.xul	chrome://policymanager/content/contextMenuOverlay.xul
+overlay	chrome://browser/content/browser.xul	chrome://policymanager/content/toolsOverlay.xul
+content	policymanager	jar:chrome/policymanager.jar!/content/policymanager/
+
+locale	policymanager	en-US	jar:chrome/policymanager.jar!/locale/en-US/policymanager/
+
+locale	policymanager	ja-JP	jar:chrome/policymanager.jar!/locale/ja-JP/policymanager/
