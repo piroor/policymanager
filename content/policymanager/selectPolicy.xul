@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="Shift_JIS"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
 <?xml-stylesheet href="chrome://policymanager/content/policymanager.css" type="text/css"?>
@@ -82,12 +82,12 @@ function init()
 
 	createList();
 
-	// �|���V�[�ݒ肪����Ȃ��ꍇ�A�|���V�[�}�l�[�W�����J��
+	// ポリシー設定が一つもない場合、ポリシーマネージャを開く
 	if (!hasPolicies()) {
 		goPolycyManager(true);
 		createList();
 
-		// �|���V�[�ݒ肪����Ȃ������ꍇ�A���̂܂܃_�C�A���O�����
+		// ポリシー設定が作られなかった場合、そのままダイアログを閉じる
 		if (!hasPolicies()) window.close();
 	}
 
