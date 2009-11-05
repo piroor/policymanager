@@ -41,12 +41,12 @@
 <!ENTITY PM.property.JS.deny    "Disable">
 
 <!ENTITY PM.property.cookie.caption "Cookies">
-<!ENTITY PM.property.cookie.default "Accept for Session">
-<!ENTITY PM.property.cookie.allow   "Accept">
+<!ENTITY PM.property.cookie.default "Accept for session">
+<!ENTITY PM.property.cookie.allow   "Accept permanently">
 <!ENTITY PM.property.cookie.deny    "Block">
 
 <!ENTITY PM.property.image.caption "Images">
-<!ENTITY PM.property.image.default "as default policy">
+<!ENTITY PM.property.image.default "Inherit Global Policy">
 <!ENTITY PM.property.image.allow   "Load">
 <!ENTITY PM.property.image.deny    "Don't load">
 
