@@ -57,10 +57,20 @@
 <!ENTITY PM.property.install.caption "ソフトウェアのインストール">
 <!ENTITY PM.property.install.allow   "許可する">
 <!ENTITY PM.property.install.deny    "禁止する">
+<!ENTITY PM.property.install.disable "完全に禁止する">
 
 <!ENTITY PM.property.localFileAccess.caption "ローカルファイルへのアクセス">
 <!ENTITY PM.property.localFileAccess.allow   "許可する">
 <!ENTITY PM.property.localFileAccess.deny    "禁止する">
+
+<!ENTITY PM.property.offlineApp.caption "オフライン作業用データの保存">
+<!ENTITY PM.property.offlineApp.allow   "許可する">
+<!ENTITY PM.property.offlineApp.deny    "禁止する">
+<!ENTITY PM.property.offlineApp.disable "完全に禁止する">
+
+<!ENTITY PM.property.geo.caption "位置情報の取得">
+<!ENTITY PM.property.geo.allow   "許可する">
+<!ENTITY PM.property.geo.deny    "禁止する">
 
 <!ENTITY PM.property.clipboard.caption "クリップボードの内容へのアクセス">
 <!ENTITY PM.property.clipboard.allow   "許可する">

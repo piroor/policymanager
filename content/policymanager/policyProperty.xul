@@ -59,9 +59,9 @@
 				<label value="&PM.property.image.caption;"/>
 				<radiogroup id="ImagePermissionRadio" orient="horizontal"
 					oncommand="onChangeRadio('image', this.value);">
-					<radio value="0" label="&PM.property.image.default;" class="not-for-default"/>
 					<radio value="1" label="&PM.property.image.allow;"/>
 					<radio value="2" label="&PM.property.image.deny;"/>
+					<radio value="0" label="&PM.property.image.default;" class="not-for-default"/>
 				</radiogroup>
 			</row>
 			<row id="popupPermission">
@@ -76,8 +76,9 @@
 				<label value="&PM.property.install.caption;"/>
 				<radiogroup id="InstallPermissionRadio" orient="horizontal"
 					oncommand="onChangeRadio('install', this.value);">
-					<radio value="1" label="&PM.property.install.allow;"/>
-					<radio value="0" label="&PM.property.install.deny;"/>
+					<radio value="1"  label="&PM.property.install.allow;"/>
+					<radio value="0"  label="&PM.property.install.deny;"/>
+					<radio value="-1" label="&PM.property.install.disable;" class="for-default"/>
 				</radiogroup>
 			</row>
 			<row id="localFileAccess">
@@ -86,6 +87,23 @@
 					oncommand="onChangeRadio('localFileAccess', this.value);">
 					<radio value="allAccess" label="&PM.property.localFileAccess.allow;"/>
 					<radio value="sameOrigin" label="&PM.property.localFileAccess.deny;"/>
+				</radiogroup>
+			</row>
+			<row id="offlineApp">
+				<label value="&PM.property.offlineApp.caption;"/>
+				<radiogroup id="OfflineAppRadio" orient="horizontal"
+					oncommand="onChangeRadio('offlineApp', this.value);">
+					<radio value="1"  label="&PM.property.offlineApp.allow;"/>
+					<radio value="0"  label="&PM.property.offlineApp.deny;"/>
+					<radio value="-1" label="&PM.property.offlineApp.disable;" class="for-default"/>
+				</radiogroup>
+			</row>
+			<row id="geo">
+				<label value="&PM.property.geo.caption;"/>
+				<radiogroup id="GeoRadio" orient="horizontal"
+					oncommand="onChangeRadio('geo', this.value);">
+					<radio value="1" label="&PM.property.geo.allow;"/>
+					<radio value="0" label="&PM.property.geo.deny;"/>
 				</radiogroup>
 			</row>
 			</rows>

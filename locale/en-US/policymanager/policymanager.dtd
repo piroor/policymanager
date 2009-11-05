@@ -57,10 +57,20 @@
 <!ENTITY PM.property.install.caption "Software installation requests">
 <!ENTITY PM.property.install.allow   "Allow">
 <!ENTITY PM.property.install.deny    "Block">
+<!ENTITY PM.property.install.disable "Disable completely">
 
-<!ENTITY PM.property.localFileAccess.caption "Accessing to local files">
+<!ENTITY PM.property.localFileAccess.caption "Local file access">
 <!ENTITY PM.property.localFileAccess.allow   "Allow">
 <!ENTITY PM.property.localFileAccess.deny    "Block">
+
+<!ENTITY PM.property.offlineApp.caption "Data storing for offline use">
+<!ENTITY PM.property.offlineApp.allow   "Allow">
+<!ENTITY PM.property.offlineApp.deny    "Block">
+<!ENTITY PM.property.offlineApp.disable "Disable completely">
+
+<!ENTITY PM.property.geo.caption "Geolocation access">
+<!ENTITY PM.property.geo.allow   "Allow">
+<!ENTITY PM.property.geo.deny    "Block">
 
 <!ENTITY PM.property.clipboard.caption "Accessing to clipboard's contents">
 <!ENTITY PM.property.clipboard.allow   "Allow">

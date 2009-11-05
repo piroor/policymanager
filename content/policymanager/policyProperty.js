@@ -4,71 +4,75 @@ var gPrefRoot;
 
 function init()
 {
-	var i;
-
 	gData     = window.arguments[0];
 	gPrefRoot = 'capability.policy.'+encodeURIComponent(gData.name);
+
+	var i;
+	var node;
+	var isDefault = gData.name == 'default';
 
 	document.title = document.documentElement.getAttribute('titleTemplate').replace(/%s/gi, gData.name);
 
 
-	var node;
-
-	node = document.getElementById('JSPermissionRadio');
-	node.selectedItem = node.getElementsByAttribute('value', gData.JSEnabled)[0];
-	onChangeJSRadio(node.value);
-
-	node = document.getElementById('CookiePermissionRadio');
-	node.selectedItem = node.getElementsByAttribute('value', gData.cookie)[0];
-
-	node = document.getElementById('ImagePermissionRadio');
-	node.selectedItem = node.getElementsByAttribute('value', gData.image)[0];
-
-	node = document.getElementById('PopupPermissionRadio');
-	node.selectedItem = node.getElementsByAttribute('value', gData.popup)[0];
-
-	node = document.getElementById('InstallPermissionRadio');
-	node.selectedItem = node.getElementsByAttribute('value', gData.install)[0];
-
-	node = document.getElementById('LocalFileAccessRadio');
-	node.selectedItem = node.getElementsByAttribute('value', gData.localFileAccess)[0];
-
-	node = document.getElementById('ClipboardRadio');
-	node.selectedItem = node.getElementsByAttribute('value', gData.clipboard)[0];
-
-
-	var radio     = document.getElementsByAttribute('class', 'not-for-default');
-	var max       = radio.length;
-	var isDefault = gData.name == 'default';
-	if (isDefault) {
-		for (i = 0; i < max; i++)
-			radio[i].setAttribute('hidden', true);
+	var radios = {
+			JSPermissionRadio      : gData.JSEnabled,
+			CookiePermissionRadio  : gData.cookie,
+			ImagePermissionRadio   : gData.image,
+			PopupPermissionRadio   : gData.popup,
+			InstallPermissionRadio : gData.install,
+			LocalFileAccessRadio   : gData.localFileAccess,
+			OfflineAppRadio        : gData.offlineApp,
+			GeoRadio               : gData.geo,
+			ClipboardRadio         : gData.clipboard
+		};
+	for (i in radios)
+	{
+		node = document.getElementById(i);
+		node.selectedItem = node.getElementsByAttribute('value', radios[i])[0];
 	}
-	else {
-		for (i = 0; i < max; i++)
-			radio[i].removeAttribute('hidden');
-	}
+	onChangeJSRadio(document.getElementById('JSPermissionRadio').value);
 
 
-	node = document.getElementById('JSPermissionRadio').getElementsByAttribute('value', 'allAccess')[0];
-	if (PolicyService.getPref('javascript.enabled'))
-		node.removeAttribute('disabled');
-	else
-		node.setAttribute('disabled', true);
-
-	node = document.getElementById('PopupPermissionRadio').getElementsByAttribute('value', '0')[0];
-	if (!isDefault && !PolicyService.getPref('dom.disable_open_during_load'))
-		node.setAttribute('disabled', true);
-	else
-		node.removeAttribute('disabled');
-
-	node = document.getElementById('InstallPermissionRadio').getElementsByAttribute('value', '1')[0];
-	if (!isDefault && !PolicyService.getPref('xpinstall.enabled'))
-		node.setAttribute('disabled', true);
-	else
-		node.removeAttribute('disabled');
+	Array.slice(document.getElementsByAttribute('class', 'not-for-default')).forEach(
+		isDefault ?
+			function(aItem) { aItem.setAttribute('hidden', true); } :
+			function(aItem) { aItem.removeAttribute('hidden'); }
+	);
+	Array.slice(document.getElementsByAttribute('class', 'for-default')).forEach(
+		isDefault ?
+			function(aItem) { aItem.removeAttribute('hidden'); } :
+			function(aItem) { aItem.setAttribute('hidden', true); }
+	);
 
 
+	[
+		{
+			radio    : 'JSPermissionRadio',
+			item     : 'allAccess',
+			disabled : !PolicyService.getPref('javascript.enabled')
+		},
+		{
+			radio    : 'PopupPermissionRadio',
+			item     : '0',
+			disabled : !isDefault && !PolicyService.getPref('dom.disable_open_during_load')
+		},
+		{
+			radio    : 'InstallPermissionRadio',
+			item     : '1',
+			disabled : isDefault || !PolicyService.getPref('xpinstall.enabled')
+		},
+		{
+			radio    : 'OfflineAppRadio',
+			item     : '1',
+			disabled : isDefault || !PolicyService.getPref('dom.storage.enabled')
+		}
+	].forEach(function(aRadio) {
+		node = document.getElementById(aRadio.radio).getElementsByAttribute('value', aRadio.item)[0];
+		if (aRadio.disabled)
+			node.setAttribute('disabled', true);
+		else
+			node.removeAttribute('disabled');
+	});
 
 
 	document.getElementById('JS-allAccess').checked = (gData.JSMode == 'allAccess');
@@ -115,10 +119,8 @@ function changePermissionJS()
 	var currentPermission = gUpdatedData.JSMode || gData.JSMode;
 	gUpdatedData.JSMode = currentPermission == 'sameOrigin' ? 'allAccess' : 'sameOrigin' ;
 
-	var check = document.getElementsByAttribute('class', 'JScheckbox');
-	var max   = check.length;
-	for (var i = 0; i < max; i++)
-		setPermissionJS(check[i]);
+	Array.slice(document.getElementsByAttribute('class', 'JScheckbox'))
+		.forEach(setPermissionJS);
 
 	document.getElementById('JS-allAccess').checked = (currentPermission != 'allAccess');
 }

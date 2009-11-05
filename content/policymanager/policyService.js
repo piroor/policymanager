@@ -217,7 +217,7 @@ var PolicyService = {
 						),
 
 				install : (
-						isDefault ? (this.getPref('xpinstall.enabled') ? 1 : 0 ) :
+						isDefault ? (!this.getPref('xpinstall.enabled') ? -1 : 0 ) :
 						(!this.getPref('xpinstall.enabled') ?
 							0 :
 							(this.getPref(root+'.__permission__.install') === null ?
@@ -229,6 +229,25 @@ var PolicyService = {
 
 				localFileAccess : (
 							this.getPref(root+'.checkloaduri.enabled') || 'sameOrigin'
+						),
+
+				offlineApp : (
+						isDefault ? (!this.getPref('dom.storage.enabled') ? -1 : 0 ) :
+						(!this.getPref('dom.storage.enabled') ?
+							0 :
+							(this.getPref(root+'.__permission__.offline-app') === null ?
+								0 :
+								this.getPref(root+'.__permission__.offline-app')
+							)
+						)
+						),
+
+				geo : (
+						isDefault ? 0 :
+						(this.getPref(root+'.__permission__.geo') === null ?
+							0 :
+							this.getPref(root+'.__permission__.geo')
+						)
 						),
 
 				clipboard : (
@@ -312,7 +331,7 @@ var PolicyService = {
 
 			if ('install' in data.updated) {
 				if (isDefault)
-					this.setPref('xpinstall.enabled', data.updated.install == 1);
+					this.setPref('xpinstall.enabled', data.updated.install != -1);
 				else
 					this.setPermissionFor(aPolicy, 'install', data.updated.install);
 			}
@@ -322,6 +341,18 @@ var PolicyService = {
 					this.clearPref(root+'.checkloaduri.enabled');
 
 				this.setPref(root+'.checkloaduri.enabled', data.updated.localFileAccess);
+			}
+
+			if ('offlineApp' in data.updated) {
+				if (isDefault)
+					this.setPref('dom.storage.enabled', data.updated.offlineApp != -1);
+				else
+					this.setPermissionFor(aPolicy, 'offline-app', data.updated.offlineApp);
+			}
+
+			if ('geo' in data.updated) {
+				if (!isDefault)
+					this.setPermissionFor(aPolicy, 'geo', data.updated.geo);
 			}
 
 			if ('clipboard' in data.updated) {
@@ -347,10 +378,12 @@ var PolicyService = {
 		if (aPolicy == 'default') return false;
 
 		// Cookie, 画像, ポップアップのパーミッション設定を消去
-		this.setPermissionFor(aPolicy, 'cookie',  this.DEFAULT);
-		this.setPermissionFor(aPolicy, 'image',   this.DEFAULT);
-		this.setPermissionFor(aPolicy, 'popup',   this.DEFAULT);
-		this.setPermissionFor(aPolicy, 'install', this.DEFAULT);
+		this.setPermissionFor(aPolicy, 'cookie',      this.DEFAULT);
+		this.setPermissionFor(aPolicy, 'image',       this.DEFAULT);
+		this.setPermissionFor(aPolicy, 'popup',       this.DEFAULT);
+		this.setPermissionFor(aPolicy, 'install',     this.DEFAULT);
+		this.setPermissionFor(aPolicy, 'offline-app', this.DEFAULT);
+		this.setPermissionFor(aPolicy, 'geo',         this.DEFAULT);
 
 		// JavaScriptのパーミッション設定を消去
 		var prefs = this.getJSPrefsForPolicy(aPolicy);
@@ -488,6 +521,22 @@ var PolicyService = {
 				this.getPref(root+'.__permission__.install') ),
 			aSite
 		);
+		this.setPermissionFor(
+			aPolicy,
+			'offline-app',
+			(this.getPref(root+'.__permission__.offline-app') === null ?
+				this.DEFAULT :
+				this.getPref(root+'.__permission__.offline-app') ),
+			aSite
+		);
+		this.setPermissionFor(
+			aPolicy,
+			'geo',
+			(this.getPref(root+'.__permission__.geo') === null ?
+				this.DEFAULT :
+				this.getPref(root+'.__permission__.geo') ),
+			aSite
+		);
 
 		return aSite;
 	},
@@ -501,10 +550,12 @@ var PolicyService = {
 		this.removeValueFrom('capability.policy.'+encodeURIComponent(aPolicy)+'.sites', aSite);
 
 		// Cookie, 画像, ポップアップのパーミッション設定
-		this.setPermissionFor(aPolicy, 'cookie',  this.CLEAR, aSite);
-		this.setPermissionFor(aPolicy, 'image',   this.CLEAR, aSite);
-		this.setPermissionFor(aPolicy, 'popup',   this.CLEAR, aSite);
-		this.setPermissionFor(aPolicy, 'install', this.CLEAR, aSite);
+		this.setPermissionFor(aPolicy, 'cookie',      this.CLEAR, aSite);
+		this.setPermissionFor(aPolicy, 'image',       this.CLEAR, aSite);
+		this.setPermissionFor(aPolicy, 'popup',       this.CLEAR, aSite);
+		this.setPermissionFor(aPolicy, 'install',     this.CLEAR, aSite);
+		this.setPermissionFor(aPolicy, 'offline-app', this.CLEAR, aSite);
+		this.setPermissionFor(aPolicy, 'geo',         this.CLEAR, aSite);
 
 		return aSite;
 	},
@@ -536,9 +587,11 @@ var PolicyService = {
 			case this.ALLOW:
 				for (i in sites)
 				{
+					if (!sites[i]) continue;
 					try {
-						if (sites[i])
-							this.PermissionManager.add(this.makeURIFromSpec(sites[i]), aType, this.PermissionManager.ALLOW_ACTION);
+						this.PermissionManager.add(this.makeURIFromSpec(sites[i]), aType, this.PermissionManager.ALLOW_ACTION);
+						if (aType == 'offline-app')
+							this.PermissionManager.add(this.makeURIFromSpec(sites[i]), aType, Components.interfaces.nsIOfflineCacheUpdateService.ALLOW_NO_WARN);
 					}
 					catch(e) {
 						errors.push(e);
@@ -549,9 +602,11 @@ var PolicyService = {
 			case this.DENY:
 				for (i in sites)
 				{
+					if (!sites[i]) continue;
 					try {
-						if (sites[i])
-							this.PermissionManager.add(this.makeURIFromSpec(sites[i]), aType, this.PermissionManager.DENY_ACTION);
+						this.PermissionManager.add(this.makeURIFromSpec(sites[i]), aType, this.PermissionManager.DENY_ACTION);
+						if (aType == 'offline-app')
+							this.PermissionManager.remove(this.makeURIFromSpec(sites[i]), aType, Components.interfaces.nsIOfflineCacheUpdateService.ALLOW_NO_WARN);
 					}
 					catch(e) {
 						errors.push(e);
@@ -563,9 +618,9 @@ var PolicyService = {
 				if (aType == 'cookie' && aFlag > -1) {
 					for (i in sites)
 					{
+						if (!sites[i]) continue;
 						try {
-							if (sites[i])
-								this.PermissionManager.add(this.makeURIFromSpec(sites[i]), aType, this.PermissionManager.DEFAULT_ACTION);
+							this.PermissionManager.add(this.makeURIFromSpec(sites[i]), aType, this.PermissionManager.DEFAULT_ACTION);
 						}
 						catch(e) {
 							errors.push(e);
@@ -585,7 +640,7 @@ var PolicyService = {
 
 				for (i in permission)
 					if (hosts[permission[i].host])
-							this.PermissionManager.remove(permission[i].host, aType);
+						this.PermissionManager.remove(permission[i].host, aType);
 				break;
 		}
 
