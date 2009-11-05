@@ -5,7 +5,7 @@
   <RDF:Description RDF:about="urn:mozilla:install-manifest"
                    em:id="{CE494EE3-65A1-4f63-8FC1-645217F86979}"
                    em:name="Policy Manager"
-                   em:version="2.1.2008042101"
+                   em:version="2.2.2009110501"
                    em:creator="SHIMODA Hiroshi"
                    em:description="Provides a dialog to customize policy settings."
                    em:homepageURL="http://piro.sakura.ne.jp/xul/_policymanager.html.en">
