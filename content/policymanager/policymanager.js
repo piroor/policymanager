@@ -310,7 +310,6 @@ var treeDNDObserver = {
 
 	handleEvent : function(aEvent)
 	{
-Application.console.log(aEvent.type + ' '+ aEvent.originalTarget.localName);
 		switch (aEvent.type)
 		{
 			case 'dragstart':
