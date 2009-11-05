@@ -13,6 +13,7 @@
 		orient="vertical"
 		persist="screenX screenY width height"
 		onload="init();"
+		onunload="destroy();"
 		buttons="accept"
 		ondialogaccept="window.close();">
 
@@ -86,10 +87,6 @@
 					onclick="onClick(event);"
 					ondblclick="onDblClick(event);"
 					onselect="onSelect(event);"
-					ondraggesture="nsDragAndDrop.startDrag(event, treeDNDObserver);"
-					ondragover="nsDragAndDrop.dragOver(event, treeDNDObserver);"
-					ondragexit="nsDragAndDrop.dragExit(event, treeDNDObserver);"
-					ondragdrop="treeDNDObserver.onDrop(event);"
 					context="treePopup"
 					style="min-width: 20em; min-height: 15em;">
 					<treecols>

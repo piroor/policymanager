@@ -60,15 +60,15 @@ var PolicyService = {
 	},
 	_strbundle : null,
  
-	get faviconService() 
+	get FaviconService() 
 	{
-		if (!this._faviconService) {
-			this._faviconService = Components.classes['@mozilla.org/browser/favicon-service;1']
+		if (!this._FaviconService) {
+			this._FaviconService = Components.classes['@mozilla.org/browser/favicon-service;1']
 				.getService(Components.interfaces.nsIFaviconService);
 		}
-		return this._faviconService;
+		return this._FaviconService;
 	},
-	_faviconService : null,
+	_FaviconService : null,
  
 	// XPConnect 
 	
@@ -158,8 +158,13 @@ var PolicyService = {
  
 	getFaviconFor : function(aURI) 
 	{
-		var uri = this.faviconService.getFaviconForPage(this.makeURIFromSpec(aURI));
-		return uri ? uri.spec : '' ;
+		try {
+			var uri = this.FaviconService.getFaviconForPage(this.makeURIFromSpec(aURI));
+			if (uri) return uri.spec;
+		}
+		catch(e) {
+		}
+		return '';
 	},
   
 	// É|ÉäÉVÅ[ÇÃëÄçÏ 

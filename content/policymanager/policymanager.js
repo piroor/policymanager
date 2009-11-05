@@ -6,9 +6,16 @@ function init()
 	gTree = document.getElementById('policies');
 	gRoot = document.getElementById('policies-root');
 
+	treeDNDObserver.init();
+
 	updateState();
 	resetPolicyTree();
 	selectTreeAt(0);
+}
+
+function destroy()
+{
+	treeDNDObserver.destroy();
 }
 
 
@@ -247,6 +254,10 @@ function updateState()
 
 
 
+const XULAppInfo = Components.classes['@mozilla.org/xre/app-info;1']
+		.getService(Components.interfaces.nsIXULAppInfo);
+const comparator = Components.classes['@mozilla.org/xpcom/version-comparator;1']
+					.getService(Components.interfaces.nsIVersionComparator);
 
 var treeDNDObserver = {
 	_mDS: null,
@@ -260,7 +271,175 @@ var treeDNDObserver = {
 		return this._mDS;
 	},
 
-	onDragStart: function (aEvent, aTransferData, aDragAction)
+	useHTML5DNDEvents : comparator.compare(XULAppInfo.version, '3.5') >= 0,
+
+	init : function()
+	{
+		if (this.useHTML5DNDEvents) {
+			gTree.addEventListener('dragstart', this, false);
+			gTree.addEventListener('dragenter', this, false);
+			gTree.addEventListener('dragover', this, false);
+			gTree.addEventListener('dragleave', this, false);
+			gTree.addEventListener('drop', this, false);
+		}
+		else {
+			gTree.addEventListener('draggesture', this, false);
+			gTree.addEventListener('dragover', this, false);
+			gTree.addEventListener('dragexit', this, false);
+			gTree.addEventListener('dragdrop', this, false);
+		}
+	},
+
+	destroy : function()
+	{
+		if (this.useHTML5DNDEvents) {
+			gTree.removeEventListener('dragstart', this, false);
+			gTree.removeEventListener('dragenter', this, false);
+			gTree.removeEventListener('dragover', this, false);
+			gTree.removeEventListener('dragleave', this, false);
+			gTree.removeEventListener('drop', this, false);
+		}
+		else {
+			gTree.removeEventListener('draggesture', this, false);
+			gTree.removeEventListener('dragover', this, false);
+			gTree.removeEventListener('dragexit', this, false);
+			gTree.removeEventListener('dragdrop', this, false);
+		}
+	},
+
+
+	handleEvent : function(aEvent)
+	{
+Application.console.log(aEvent.type + ' '+ aEvent.originalTarget.localName);
+		switch (aEvent.type)
+		{
+			case 'dragstart':
+				this.onDragStart(aEvent);
+				return;
+			case 'dragenter':
+				this.onDragEnter(aEvent);
+				return;
+			case 'dragleave':
+				this.onDragLeave(aEvent);
+				return;
+			case 'drop':
+				this.onDrop(aEvent);
+				return;
+
+			case 'draggesture':
+				nsDragAndDrop.startDrag(aEvent, this);
+				return;
+			case 'dragexit':
+				nsDragAndDrop.dragExit(aEvent, this);
+				return;
+			case 'dragdrop':
+				this.onDragDrop(aEvent);
+				return;
+
+			case 'dragover':
+				if (this.useHTML5DNDEvents)
+					this.onDragEnter(aEvent);
+				else
+					nsDragAndDrop.dragOver(aEvent, this);
+				return;
+		}
+	},
+
+	onSiteDrop : function(aSite, aEvent)
+	{
+		aEvent.stopPropagation();
+
+		var target = getCurrentIndex(aEvent);
+		if (target < 0) {
+			var node = document.getElementById('site-'+encodeURIComponent(aSite));
+			if (node) {
+				if (confirm(PolicyService.strbundle.GetStringFromName('removeSiteConfirmMessage').replace(/%s/gi, aSite)))
+					removeSite(aSite, node.parentNode.parentNode.firstChild.firstChild.getAttribute('value'));
+			}
+			return;
+		}
+
+		target = gTree.contentView.getItemAtIndex(target);
+		if (target.getAttribute('class') == 'site-item')
+			target = target.parentNode.parentNode;
+
+		var policy = target.firstChild.firstChild.getAttribute('value');
+		aSite = PolicyService.addSiteToPolicy(aSite, policy);
+
+		resetPolicyTree();
+
+		selectTreeAt(
+			gTree.contentView.getIndexOfItem(
+				document.getElementById('site-'+encodeURIComponent(aSite))
+			)
+		);
+	},
+
+
+	/* HTML5 API */
+
+	onDragStart : function(aEvent)
+	{
+		if (aEvent.type == 'draggesture')
+			return this.onDragGesture.apply(this, arguments);
+
+		if (aEvent.originalTarget.localName != 'treechildren') return;
+
+		var site = getSelectedSite();
+		if (!site) return;
+
+		var dt = aEvent.dataTransfer;
+		dt.setData('text/x-moz-url', site+'\n');
+		dt.setData('text/plain', site);
+	},
+
+	onDragEnter : function(aEvent)
+	{
+		var dt = aEvent.dataTransfer;
+		if (
+			aEvent.originalTarget.localName != 'treechildren' ||
+			(
+				!dt.types.contains('text/x-moz-url') &&
+				!dt.types.contains('text/plain')
+			)
+			) {
+			dt.effectAllowed = 'none';
+		}
+		else {
+			var site = this.getSiteFromDataTransfer(dt);
+			dt.effectAllowed = (site && document.getElementById('site-'+encodeURIComponent(site))) ? 'move' : 'none' ;
+			if (dt.effectAllowed == 'move')
+				dt.dropEffect = 'move';
+		}
+		aEvent.preventDefault();
+	},
+
+	onDragLeave : function(aEvent)
+	{
+	},
+
+	onDrop : function(aEvent)
+	{
+		if (aEvent.originalTarget.localName != 'treechildren') return;
+
+		var site = this.getSiteFromDataTransfer(aEvent.dataTransfer);
+		if (site)
+			this.onSiteDrop(site, aEvent);
+	},
+
+	getSiteFromDataTransfer : function(aDataTransfer)
+	{
+		return aDataTransfer.types.contains('text/x-moz-url') ?
+					aDataTransfer.getData('text/x-moz-url').split('\n')[0] :
+				aDataTransfer.types.contains('text/plain') ?
+					aDataTransfer.getData('text/plain') :
+				null ;
+	},
+
+
+	/* old API */
+
+	onDragGesture: function (aEvent, aTransferData, aDragAction)
 	{
 		if (aEvent.originalTarget.localName != 'treechildren') return;
 
@@ -272,7 +451,7 @@ var treeDNDObserver = {
 		aTransferData.data.addDataForFlavour('text/unicode', site);
 	},
 
-	onDrop : function(aEvent)
+	onDragDrop : function(aEvent)
 	{
 		if (aEvent.originalTarget.localName != 'treechildren') return;
 
@@ -298,36 +477,8 @@ var treeDNDObserver = {
 			default:
 				break;
 		}
-		if (!site) return;
-
-		aEvent.stopPropagation();
-
-
-		var target = getCurrentIndex(aEvent);
-		if (target < 0) {
-			var node = document.getElementById('site-'+encodeURIComponent(site));
-			if (node) {
-				if (confirm(PolicyService.strbundle.GetStringFromName('removeSiteConfirmMessage').replace(/%s/gi, site)))
-					removeSite(site, node.parentNode.parentNode.firstChild.firstChild.getAttribute('value'));
-			}
-			return;
-		}
-
-
-		target = gTree.contentView.getItemAtIndex(target);
-		if (target.getAttribute('class') == 'site-item')
-			target = target.parentNode.parentNode;
-
-		var policy = target.firstChild.firstChild.getAttribute('value');
-		site = PolicyService.addSiteToPolicy(site, policy);
-
-		resetPolicyTree();
-
-		selectTreeAt(
-			gTree.contentView.getIndexOfItem(
-				document.getElementById('site-'+encodeURIComponent(site))
-			)
-		);
+		if (site)
+			this.onSiteDrop(site, aEvent);
 	},
 
 	onDragOver : function(aEvent, aFlavour, aSession)
