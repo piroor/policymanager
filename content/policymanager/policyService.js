@@ -1,7 +1,7 @@
 var PolicyService = { 
-	 
+	
 	// properties 
-	 
+	
 	// 定数 
 
 	CLEAR   : -1,
@@ -62,14 +62,9 @@ var PolicyService = {
  
 	get faviconService() 
 	{
-		if (this._faviconService === null) {
-			try {
-					this._faviconService = Components.classes['@mozilla.org/browser/favicon-service;1']
-						.getService(Components.interfaces.nsIFaviconService);
-				}
-				catch(e) {
-					this._faviconService = void(0);
-				}
+		if (!this._faviconService) {
+			this._faviconService = Components.classes['@mozilla.org/browser/favicon-service;1']
+				.getService(Components.interfaces.nsIFaviconService);
 		}
 		return this._faviconService;
 	},
@@ -86,100 +81,6 @@ var PolicyService = {
 	},
 	_IOService : null,
  
-	get Prefs() 
-	{
-		if (!this._Prefs) {
-			this._Prefs = Components.classes['@mozilla.org/preferences;1'].getService(Components.interfaces.nsIPrefBranch);
-		}
-		return this._Prefs;
-	},
-	_Prefs : null,
-	
-	getPref : function(aPrefstring, aStringType) 
-	{
-		try {
-			switch (this.Prefs.getPrefType(aPrefstring))
-			{
-				case this.Prefs.PREF_STRING:
-					return this.Prefs.getComplexValue(aPrefstring, aStringType || this.knsISupportsString).data;
-					break;
-				case this.Prefs.PREF_INT:
-					return this.Prefs.getIntPref(aPrefstring);
-					break;
-				default:
-					return this.Prefs.getBoolPref(aPrefstring);
-					break;
-			}
-		}
-		catch(e) {
-		}
-
-		return null;
-	},
- 
-	setPref : function(aPrefstring, aNewValue, aPrefObj) 
-	{
-		var pref = aPrefObj || this.Prefs ;
-		var type;
-		try {
-			type = typeof aNewValue;
-		}
-		catch(e) {
-			type = null;
-		}
-
-		switch (type)
-		{
-			case 'string':
-				var string = Components.classes['@mozilla.org/supports-string;1'].createInstance(this.knsISupportsString) ;
-				string.data = aNewValue;
-				pref.setComplexValue(aPrefstring, this.knsISupportsString, string);
-				break;
-			case 'number':
-				pref.setIntPref(aPrefstring, parseInt(aNewValue));
-				break;
-			default:
-				pref.setBoolPref(aPrefstring, aNewValue);
-				break;
-		}
-		return true;
-	},
- 
-	clearPref : function(aPrefstring) 
-	{
-		try {
-			this.Prefs.clearUserPref(aPrefstring);
-		}
-		catch(e) {
-		}
-
-		return;
-	},
- 
-	addPrefListener : function(aObserver) 
-	{
-		var domains = ('domains' in aObserver) ? aObserver.domains : [aObserver.domain] ;
-		try {
-			var pbi = this.Prefs.QueryInterface(Components.interfaces.nsIPrefBranchInternal);
-			for (var i = 0; i < domains.length; i++)
-				pbi.addObserver(domains[i], aObserver, false);
-		}
-		catch(e) {
-		}
-	},
- 
-	removePrefListener : function(aObserver) 
-	{
-		var domains = ('domains' in aObserver) ? aObserver.domains : [aObserver.domain] ;
-		try {
-			var pbi = this.Prefs.QueryInterface(Components.interfaces.nsIPrefBranchInternal);
-			for (var i = 0; i < domains.length; i++)
-				pbi.removeObserver(domains[i], aObserver, false);
-		}
-		catch(e) {
-		}
-	},
-  
 	get PermissionManager() 
 	{
 		if (!this._PermissionManager) {
@@ -207,7 +108,7 @@ var PolicyService = {
 	_PromptService : null,
    
 	// 汎用関数 
-	 
+	
 	makeURIFromSpec : function(aURI) 
 	{
 		try {
@@ -257,55 +158,10 @@ var PolicyService = {
  
 	getFaviconFor : function(aURI) 
 	{
-		var icon = '';
-		if (this.faviconService) { // Firefox 3
-			try {
-				var uri = this.faviconService.getFaviconForPage(this.makeURIFromSpec(aURI));
-				if (uri)
-					return uri.spec;
-			}
-			catch(e) {
-			}
-			return icon;
-		}
-
-		var uri = this.makeURIFromSpec(aURI);
-		if (!uri) return icon;
-
-		uri = uri.prePath + '/favicon.ico';
-		if (!this.isIconKnownMissing(uri)) return uri;
-
-		return icon;
+		var uri = this.faviconService.getFaviconForPage(this.makeURIFromSpec(aURI));
+		return uri ? uri.spec : '' ;
 	},
-	 
-	isIconKnownMissing : function(aKey) 
-	{
-		try {
-			if (!this.mMissedIconCache) {
-				var cacheService = Components.classes['@mozilla.org/network/cache-service;1']
-						.getService(Components.interfaces.nsICacheService);
-				this.mMissedIconCache = cacheService.createSession(
-					'MissedIconCache',
-					Components.interfaces.nsICache.STORE_ANYWHERE,
-					true
-				);
-				if (!this.mMissedIconCache) return null;
-			}
-			var entry = this.mMissedIconCache.openCacheEntry(
-					aKey,
-					Components.interfaces.nsICache.ACCESS_READ,
-					true
-				);
-			if (entry) {
-				entry.close();
-				return true;
-			}
-		}
-		catch (e) {
-			return false;
-		}
-	},
-  	 
+  
 	// ポリシーの操作 
 	
 	// ポリシーの定義データを得る 
@@ -737,8 +593,7 @@ var PolicyService = {
 			);
 	},
   
-	destruct : function() 
-	{
-	}
+	___ : null 
 };
+PolicyService.__proto__ = window['piro.sakura.ne.jp'].prefs;
   
