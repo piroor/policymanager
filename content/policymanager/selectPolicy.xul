@@ -51,7 +51,7 @@
 						<menuitem label="&PM.default;" value="default"/>
 					</menupopup>
 				</menulist>
-				<button label="&PM.select.manage;" oncommand="goPolycyManager(true); createList(); initList();"/>
+				<button label="&PM.select.manage;" oncommand="goPolycyManager(true); createList(); initMenulist();"/>
 			</box>
 		</row>
 	</rows>
@@ -82,15 +82,10 @@ function init()
 
 	createList();
 
-	// ポリシー設定が一つもない場合、ポリシーマネージャを開く
 	if (!hasPolicies()) {
-		goPolycyManager(true);
-		createList();
-
-		// ポリシー設定が作られなかった場合、そのままダイアログを閉じる
-		if (!hasPolicies()) window.close();
+		window.close();
+		return;
 	}
-
 
 	initMenulist();
 
@@ -114,9 +109,8 @@ function createList()
 	range.detach();
 
 	var policies = PolicyService.policies;
-	for (i in policies)
+	for (var i in policies)
 	{
-		if (!policies[i]) continue;
 		menulist.firstChild.appendChild(document.createElement('menuitem'));
 		menulist.firstChild.lastChild.setAttribute('label', policies[i]);
 		menulist.firstChild.lastChild.setAttribute('value', policies[i]);

@@ -7,15 +7,36 @@
 	<menuitem id="context-policymanager"
 		insertafter="context-metadata"
 		label="&PM.go;" 
-		oncommand="window.openDialog('chrome://policymanager/content/selectPolicy.xul', '_blank', 'chrome,modal,centerscreen');"/>
+		oncommand="goSelectPolicy();"/>
 </popup>
 
 <script type="application/x-javascript" src="pmUtility.js"/>
 <script type="application/x-javascript" src="policyService.js"/>
 <script type="application/x-javascript"><![CDATA[
 
-	function PolicyManagerInit()
+var PolicyServiceUI = {
+	handleEvent : function(aEvent)
 	{
+		switch (aEvent.type)
+		{
+			case 'load':
+				this.init();
+				break;
+
+			case 'unload':
+				this.destroy();
+				break;
+
+			case 'popupshowing':
+				this.onPopupShowing(aEvent);
+				break;
+		}
+	},
+
+	init : function()
+	{
+		window.removeEventListener('load', this, false);
+
 		// Translate from old version pref.
 		var globalJSEnabled = PolicyService.getPref('capability.policy.default.javascript.enabled');
 		if (
@@ -47,7 +68,8 @@
 		var menupopup = document.getElementById('contentAreaContextMenu');
 		if (!menupopup) return;
 
-		menupopup.addEventListener('popupshowing', pmUpdateContextMenu, true);
+		window.addEventListener('unload', this, false);
+		menupopup.addEventListener('popupshowing', this, true);
 
 		if (location.href == 'chrome://browser/content/browser.xul') { // Firefox
 			var STRBUNDLE = Components.classes['@mozilla.org/intl/stringbundle;1'].getService(Components.interfaces.nsIStringBundleService);
@@ -63,26 +85,23 @@
 				item.setAttribute('oncommand', 'goPolycyManager();');
 			}
 		}
+	},
 
-		window.addEventListener('unload', PolicyManagerDestruct, false);
-	}
-
-	function PolicyManagerDestruct()
+	destroy : function()
 	{
-		document.getElementById('contentAreaContextMenu').removeEventListener('popupshowing', pmUpdateContextMenu, false);
-	}
+		window.removeEventListener('unload', this, false);
+		document.getElementById('contentAreaContextMenu').removeEventListener('popupshowing', this, false);
+	},
 
-
-	function pmUpdateContextMenu()
+	onPopupShowing : function(aEvent)
 	{
 		var gCM = window.gContextMenu;
 		if (gCM)
 			document.getElementById('context-policymanager').hidden = (gCM.inDirList || gCM.isTextSelected || gCM.onTextInput);
-		return;
 	}
+};
 
-
-	window.addEventListener('load', PolicyManagerInit, false);
+window.addEventListener('load', PolicyServiceUI, false);
 
 ]]></script>
 

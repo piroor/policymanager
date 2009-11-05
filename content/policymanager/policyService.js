@@ -669,6 +669,7 @@ var PolicyService = {
 		if (!sites.length) return;
 
 		var i;
+		var errors = [];
 		switch (aFlag)
 		{
 			case this.ALLOW:
@@ -679,6 +680,7 @@ var PolicyService = {
 							this.PermissionManager.add(this.makeURIFromSpec(sites[i]), aType, this.PermissionManager.ALLOW_ACTION);
 					}
 					catch(e) {
+						errors.push(e);
 					}
 				}
 				break;
@@ -691,6 +693,7 @@ var PolicyService = {
 							this.PermissionManager.add(this.makeURIFromSpec(sites[i]), aType, this.PermissionManager.DENY_ACTION);
 					}
 					catch(e) {
+						errors.push(e);
 					}
 				}
 				break;
@@ -704,6 +707,7 @@ var PolicyService = {
 								this.PermissionManager.add(this.makeURIFromSpec(sites[i]), aType, this.PermissionManager.DEFAULT_ACTION);
 						}
 						catch(e) {
+							errors.push(e);
 						}
 					}
 					break;
@@ -723,6 +727,14 @@ var PolicyService = {
 							this.PermissionManager.remove(permission[i].host, aType);
 				break;
 		}
+
+		if (errors.length)
+			alert(
+				'PolicyService::setPermissionFor() ERROR!!\n'+
+				[aPolicy, aType, aFlag, aSite].join(' / ')+
+				'\n----\n'+
+				errors.join('\n----\n')
+			);
 	},
   
 	destruct : function() 
