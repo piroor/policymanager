@@ -44,34 +44,50 @@ function init()
 			function(aItem) { aItem.setAttribute('hidden', true); }
 	);
 
-
 	[
 		{
-			radio    : 'JSPermissionRadio',
-			item     : 'allAccess',
+			item     : 'ImagePermissionRadioInherit',
+			hidden   : isDefault
+		},
+		{
+			item     : 'InstallPermissionRadioDisable',
+			hidden   : !isDefault
+		},
+		{
+			item     : 'OfflineAppRadioDisable',
+			hidden   : !isDefault
+		},
+		{
+			item     : 'JSPermissionRadioAllow',
 			disabled : !PolicyService.getPref('javascript.enabled')
 		},
 		{
-			radio    : 'PopupPermissionRadio',
-			item     : '0',
+			item     : 'PopupPermissionRadioDeny',
 			disabled : !isDefault && !PolicyService.getPref('dom.disable_open_during_load')
 		},
 		{
-			radio    : 'InstallPermissionRadio',
-			item     : '1',
+			item     : 'InstallPermissionRadioAllow',
 			disabled : isDefault || !PolicyService.getPref('xpinstall.enabled')
 		},
 		{
-			radio    : 'OfflineAppRadio',
-			item     : '1',
+			item     : 'OfflineAppRadioAllow',
 			disabled : isDefault || !PolicyService.getPref('dom.storage.enabled')
+		},
+		{
+			item     : 'geo',
+			hidden   : !PolicyService.isAvailableGeolocation
 		}
-	].forEach(function(aRadio) {
-		node = document.getElementById(aRadio.radio).getElementsByAttribute('value', aRadio.item)[0];
-		if (aRadio.disabled)
+	].forEach(function(aItem) {
+		node = document.getElementById(aItem.item);
+		if (aItem.disabled)
 			node.setAttribute('disabled', true);
 		else
 			node.removeAttribute('disabled');
+
+		if (aItem.hidden)
+			node.setAttribute('hidden', true);
+		else
+			node.removeAttribute('hidden');
 	});
 
 

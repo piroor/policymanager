@@ -28,6 +28,18 @@ var PolicyService = {
 
 	knsISupportsString : Components.interfaces.nsISupportsString,
  
+	XULAppInfo : Components.classes['@mozilla.org/xre/app-info;1']
+					.getService(Components.interfaces.nsIXULAppInfo),
+	comparator : Components.classes['@mozilla.org/xpcom/version-comparator;1']
+					.getService(Components.interfaces.nsIVersionComparator),
+
+	get isAvailableGeolocation() {
+		return this.comparator.compare(this.XULAppInfo.version, '3.5') >= 0;
+	},
+	get useHTML5DragEvents() {
+		return this.comparator.compare(this.XULAppInfo.version, '3.5') >= 0;
+	},
+ 
 	// 利用できるポリシー 
 	get policies()
 	{
@@ -350,7 +362,8 @@ var PolicyService = {
 					this.setPermissionFor(aPolicy, 'offline-app', data.updated.offlineApp);
 			}
 
-			if ('geo' in data.updated) {
+			if (this.isAvailableGeolocation &&
+				'geo' in data.updated) {
 				if (!isDefault)
 					this.setPermissionFor(aPolicy, 'geo', data.updated.geo);
 			}
@@ -383,7 +396,8 @@ var PolicyService = {
 		this.setPermissionFor(aPolicy, 'popup',       this.DEFAULT);
 		this.setPermissionFor(aPolicy, 'install',     this.DEFAULT);
 		this.setPermissionFor(aPolicy, 'offline-app', this.DEFAULT);
-		this.setPermissionFor(aPolicy, 'geo',         this.DEFAULT);
+		if (this.isAvailableGeolocation)
+			this.setPermissionFor(aPolicy, 'geo', this.DEFAULT);
 
 		// JavaScriptのパーミッション設定を消去
 		var prefs = this.getJSPrefsForPolicy(aPolicy);
@@ -529,14 +543,15 @@ var PolicyService = {
 				this.getPref(root+'.__permission__.offline-app') ),
 			aSite
 		);
-		this.setPermissionFor(
-			aPolicy,
-			'geo',
-			(this.getPref(root+'.__permission__.geo') === null ?
-				this.DEFAULT :
-				this.getPref(root+'.__permission__.geo') ),
-			aSite
-		);
+		if (this.isAvailableGeolocation)
+			this.setPermissionFor(
+				aPolicy,
+				'geo',
+				(this.getPref(root+'.__permission__.geo') === null ?
+					this.DEFAULT :
+					this.getPref(root+'.__permission__.geo') ),
+				aSite
+			);
 
 		return aSite;
 	},
@@ -555,7 +570,8 @@ var PolicyService = {
 		this.setPermissionFor(aPolicy, 'popup',       this.CLEAR, aSite);
 		this.setPermissionFor(aPolicy, 'install',     this.CLEAR, aSite);
 		this.setPermissionFor(aPolicy, 'offline-app', this.CLEAR, aSite);
-		this.setPermissionFor(aPolicy, 'geo',         this.CLEAR, aSite);
+		if (this.isAvailableGeolocation)
+			this.setPermissionFor(aPolicy, 'geo', this.CLEAR, aSite);
 
 		return aSite;
 	},

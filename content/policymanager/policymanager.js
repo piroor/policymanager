@@ -252,13 +252,6 @@ function updateState()
 
 
 
-
-
-const XULAppInfo = Components.classes['@mozilla.org/xre/app-info;1']
-		.getService(Components.interfaces.nsIXULAppInfo);
-const comparator = Components.classes['@mozilla.org/xpcom/version-comparator;1']
-					.getService(Components.interfaces.nsIVersionComparator);
-
 var treeDNDObserver = {
 	_mDS: null,
 	get mDragService()
@@ -271,11 +264,9 @@ var treeDNDObserver = {
 		return this._mDS;
 	},
 
-	useHTML5DNDEvents : comparator.compare(XULAppInfo.version, '3.5') >= 0,
-
 	init : function()
 	{
-		if (this.useHTML5DNDEvents) {
+		if (PolicyService.useHTML5DragEvents) {
 			gTree.addEventListener('dragstart', this, false);
 			gTree.addEventListener('dragenter', this, false);
 			gTree.addEventListener('dragover', this, false);
@@ -292,7 +283,7 @@ var treeDNDObserver = {
 
 	destroy : function()
 	{
-		if (this.useHTML5DNDEvents) {
+		if (PolicyService.useHTML5DragEvents) {
 			gTree.removeEventListener('dragstart', this, false);
 			gTree.removeEventListener('dragenter', this, false);
 			gTree.removeEventListener('dragover', this, false);
@@ -336,7 +327,7 @@ var treeDNDObserver = {
 				return;
 
 			case 'dragover':
-				if (this.useHTML5DNDEvents)
+				if (PolicyService.useHTML5DragEvents)
 					this.onDragEnter(aEvent);
 				else
 					nsDragAndDrop.dragOver(aEvent, this);

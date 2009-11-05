@@ -42,7 +42,7 @@
 				<label value="&PM.property.JS.caption;"/>
 				<radiogroup id="JSPermissionRadio" orient="horizontal"
 					oncommand="onChangeJSRadio(this.value);">
-					<radio value="allAccess" label="&PM.property.JS.allow;"/>
+					<radio value="allAccess" label="&PM.property.JS.allow;" id="JSPermissionRadioAllow"/>
 					<radio value="noAccess"  label="&PM.property.JS.deny;"/>
 				</radiogroup>
 			</row>
@@ -61,7 +61,7 @@
 					oncommand="onChangeRadio('image', this.value);">
 					<radio value="1" label="&PM.property.image.allow;"/>
 					<radio value="2" label="&PM.property.image.deny;"/>
-					<radio value="0" label="&PM.property.image.default;" class="not-for-default"/>
+					<radio value="0" label="&PM.property.image.default;" id="ImagePermissionRadioInherit"/>
 				</radiogroup>
 			</row>
 			<row id="popupPermission">
@@ -69,16 +69,16 @@
 				<radiogroup id="PopupPermissionRadio" orient="horizontal"
 					oncommand="onChangeRadio('popup', this.value);">
 					<radio value="1" label="&PM.property.popup.allow;"/>
-					<radio value="0" label="&PM.property.popup.deny;"/>
+					<radio value="0" label="&PM.property.popup.deny;" id="PopupPermissionRadioDeny"/>
 				</radiogroup>
 			</row>
 			<row id="installPermission">
 				<label value="&PM.property.install.caption;"/>
 				<radiogroup id="InstallPermissionRadio" orient="horizontal"
 					oncommand="onChangeRadio('install', this.value);">
-					<radio value="1"  label="&PM.property.install.allow;"/>
+					<radio value="1"  label="&PM.property.install.allow;" id="InstallPermissionRadioAllow"/>
 					<radio value="0"  label="&PM.property.install.deny;"/>
-					<radio value="-1" label="&PM.property.install.disable;" class="for-default"/>
+					<radio value="-1" label="&PM.property.install.disable;" id="InstallPermissionRadioDisable"/>
 				</radiogroup>
 			</row>
 			<row id="localFileAccess">
@@ -93,9 +93,9 @@
 				<label value="&PM.property.offlineApp.caption;"/>
 				<radiogroup id="OfflineAppRadio" orient="horizontal"
 					oncommand="onChangeRadio('offlineApp', this.value);">
-					<radio value="1"  label="&PM.property.offlineApp.allow;"/>
+					<radio value="1"  label="&PM.property.offlineApp.allow;" id="OfflineAppRadioAllow"/>
 					<radio value="0"  label="&PM.property.offlineApp.deny;"/>
-					<radio value="-1" label="&PM.property.offlineApp.disable;" class="for-default"/>
+					<radio value="-1" label="&PM.property.offlineApp.disable;" id="OfflineAppRadioDisable"/>
 				</radiogroup>
 			</row>
 			<row id="geo">
