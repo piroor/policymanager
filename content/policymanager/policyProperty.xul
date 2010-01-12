@@ -16,9 +16,9 @@
 		ondialogaccept="onAccept();"
 		ondialogcancel="onCancel();">
 
-<script type="application/x-javascript" src="prefs.js"/>
-<script type="application/x-javascript" src="policyService.js"/>
-<script type="application/x-javascript" src="policyProperty.js"/>
+<script type="application/javascript" src="prefs.js"/>
+<script type="application/javascript" src="policyService.js"/>
+<script type="application/javascript" src="policyProperty.js"/>
 
 <broadcasterset>
 	<broadcaster id="JSItems"/>

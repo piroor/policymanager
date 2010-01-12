@@ -10,10 +10,10 @@
 		oncommand="goSelectPolicy();"/>
 </popup>
 
-<script type="application/x-javascript" src="pmUtility.js"/>
-<script type="application/x-javascript" src="prefs.js"/>
-<script type="application/x-javascript" src="policyService.js"/>
-<script type="application/x-javascript"><![CDATA[
+<script type="application/javascript" src="pmUtility.js"/>
+<script type="application/javascript" src="prefs.js"/>
+<script type="application/javascript" src="policyService.js"/>
+<script type="application/javascript"><![CDATA[
 
 var PolicyServiceUI = {
 	handleEvent : function(aEvent)
