@@ -180,4 +180,4 @@ timelesséÅÇ…ê[Ç≠ä¥é”Ç¢ÇΩÇµÇ‹Ç∑ÅB
 
 ------------------------------------------------------------------------
 Policy Manager for NS7 & Moz & Firefox
-Copyright 2002-2003 Piro(SHIMODA Hiroshi)
+Copyright 2002-2003 Piro(YUKI "Piro" Hiroshi)
