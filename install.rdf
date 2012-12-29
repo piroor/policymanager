@@ -8,7 +8,8 @@
                    em:version="2.2.2009110501"
                    em:creator="YUKI &quot;Piro&quot; Hiroshi"
                    em:description="Provides a dialog to customize policy settings."
-                   em:homepageURL="http://piro.sakura.ne.jp/xul/_policymanager.html.en">
+                   em:homepageURL="http://piro.sakura.ne.jp/xul/_policymanager.html.en"
+                   em:type="2">
 <!--
                    em:iconURL=""
                    em:optionsURL=""
