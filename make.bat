@@ -1,3 +1,3 @@
 copy buildscript\makexpi.sh .\
-bash makexpi.sh policymanager version=0
+bash makexpi.sh -n policymanager -o
 del makexpi.sh
