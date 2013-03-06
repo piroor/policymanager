@@ -72,6 +72,15 @@ var PolicyService = {
 	},
 	_strbundle : null,
  
+	get AsyncFavicons() 
+	{
+		if (!this._AsyncFavicons) {
+			this._AsyncFavicons = Components.classes['@mozilla.org/browser/favicon-service;1']
+						.getService(Components.interfaces.mozIAsyncFavicons);
+		}
+		return this._AsyncFavicons;
+	},
+	_AsyncFavicons : null,
 	get FaviconService() 
 	{
 		if (!this._FaviconService) {
@@ -168,15 +177,28 @@ var PolicyService = {
 		return false;
 	},
  
-	getFaviconFor : function(aURI) 
+	getFaviconFor : function(aURI, aCallback) 
 	{
 		try {
-			var uri = this.FaviconService.getFaviconForPage(this.makeURIFromSpec(aURI));
-			if (uri) return uri.spec;
+			if ('getFaviconForPage' in this.FaviconService) { // for legacy versions older than Firefox 21
+				let uri = this.FaviconService.getFaviconForPage(this.makeURIFromSpec(aURI));
+				if (uri) {
+					uri = this.FaviconService.getFaviconLinkForIcon(uri).spec;
+				}
+				else {
+					uri = '';
+				}
+				return aCallback(uri);
+			}
+			this.AsyncFavicons.getFaviconURLForPage(this.makeURIFromSpec(aURI), (function(aFaviconURI) {
+				var uri = this.FaviconService.getFaviconLinkForIcon(aFaviconURI).spec;
+				aCallback(uri);
+			}).bind(this));
+			return;
 		}
 		catch(e) {
 		}
-		return '';
+		aCallback('');
 	},
   
 	// É|ÉäÉVÅ[ÇÃëÄçÏ 

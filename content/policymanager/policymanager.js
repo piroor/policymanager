@@ -184,24 +184,25 @@ function resetPolicyTree()
 
 		count = 0;
 		sites = PolicyService.getSitesForPolicy(policies[i]);
-		for (j in sites)
-		{
-			if (!sites[j]) continue;
+		sites.forEach(function(aSite) {
+			if (!aSite) return;
 
 			count++;
 
 			siteItem = document.createElement('treeitem');
-			siteItem.setAttribute('id',    'site-'+encodeURIComponent(sites[j]));
+			siteItem.setAttribute('id',    'site-'+encodeURIComponent(aSite));
 			siteItem.setAttribute('class', 'site-item');
 
 			siteItem.appendChild(document.createElement('treerow'));
 			siteItem.firstChild.appendChild(document.createElement('treecell'));
-			siteItem.firstChild.firstChild.setAttribute('label', sites[j]);
-			siteItem.firstChild.firstChild.setAttribute('value', sites[j]);
-			siteItem.firstChild.firstChild.setAttribute('src', PolicyService.getFaviconFor(sites[j]));
+			siteItem.firstChild.firstChild.setAttribute('label', aSite);
+			siteItem.firstChild.firstChild.setAttribute('value', aSite);
+			PolicyService.getFaviconFor(aSite, function(aURI) {
+				siteItem.firstChild.firstChild.setAttribute('src', aURI);
+			})
 
 			policyItem.lastChild.appendChild(siteItem);
-		}
+		});
 
 
 		policyItem.firstChild.firstChild.setAttribute('label', policies[i] + ' ('+count+')');
