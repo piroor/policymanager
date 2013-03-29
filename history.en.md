@@ -1,5 +1,8 @@
 # History
 
+ - master/HEAD
+   * Modified: "jar" archive is no longer included.
+   * Many tiny fixes. See the [commit log](https://github.com/piroor/policymanager/commits/master) for more information.
  - 2.2.2009110501
    * Works on Minefield and Firefox 3.6.
    * Improved: Support management of permissions about the DOM storage API and the geolocation API.

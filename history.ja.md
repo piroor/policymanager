@@ -1,5 +1,8 @@
 # 更新履歴
 
+ - master/HEAD
+   * jarファイルを含めない形のパッケージングに変更
+   * 細かい修正色々（詳しくは[コミットログ](https://github.com/piroor/policymanager/commits/master)を参照）
  - 2.2.2009110501
    * Minefield, Firefox 3.6対応
    * DOMストレージAPI、Geolocation APIのアクセス許可も制御できるようにした
