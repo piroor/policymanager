@@ -74,7 +74,7 @@ function init()
 	if (
 		!focusedWindow ||
 		focusedWindow == opener ||
-		Components.lookupMethod(focusedWindow, 'top').call(focusedWindow) == opener
+		focusedWindow.top == opener
 		)
 		focusedWindow = opener.gBrowser.contentWindow;
 
