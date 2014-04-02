@@ -43,7 +43,7 @@ var PolicyService = {
 	// 利用できるポリシー 
 	get policies()
 	{
-		var array = (this.getPref('capability.policy.policynames') || '').split(/[,|]|\s+/);
+		var array = (this.prefs.getPref('capability.policy.policynames') || '').split(/[,|]|\s+/);
 		var result = [];
 		for (var i in array)
 		{
@@ -154,23 +154,23 @@ var PolicyService = {
 	// スペース区切りの値リストに値を加える 
 	addValueTo : function(aPrefstring, aValue)
 	{
-		var values = (this.getPref(aPrefstring) || '').split(/[,|]| +/);
+		var values = (this.prefs.getPref(aPrefstring) || '').split(/[,|]| +/);
 		for (var i in values)
 			if (values[i] == aValue) return false;
 
 		values.push(aValue);
-		this.setPref(aPrefstring, values.join(' ').replace(/^ | $/g, ''));
+		this.prefs.setPref(aPrefstring, values.join(' ').replace(/^ | $/g, ''));
 		return true;
 	},
  
 	// スペース区切りの値リストから値を削除する 
 	removeValueFrom : function(aPrefstring, aValue)
 	{
-		var values = (this.getPref(aPrefstring) || '').split(/[,|]|\s+/);
+		var values = (this.prefs.getPref(aPrefstring) || '').split(/[,|]|\s+/);
 		for (var i in values)
 			if (values[i] == aValue) {
 				values.splice(i, 1);
-				this.setPref(aPrefstring, values.join(' ').replace(/^ | $/g, ''));
+				this.prefs.setPref(aPrefstring, values.join(' ').replace(/^ | $/g, ''));
 				return true;
 			}
 
@@ -215,79 +215,79 @@ var PolicyService = {
 				name    : aPolicy,
 				sites   : this.getSitesForPolicy(aPolicy),
 
-				JSMode  : (this.getPref(root+'.__JSPermission__') || 'sameOrigin'),
+				JSMode  : (this.prefs.getPref(root+'.__JSPermission__') || 'sameOrigin'),
 				JS      : {},
 
-				JSEnabled : (!this.getPref('javascript.enabled') ?
+				JSEnabled : (!this.prefs.getPref('javascript.enabled') ?
 							'noAccess' :
-							this.getPref(root+'.javascript.enabled') || 'allAccess'
+							this.prefs.getPref(root+'.javascript.enabled') || 'allAccess'
 						),
 
 				cookie  : (
-						isDefault ? this.getPref('network.cookie.cookieBehavior') :
-						(this.getPref(root+'.__permission__.cookie') === null ?
-							this.getPref('network.cookie.cookieBehavior') :
-							this.getPref(root+'.__permission__.cookie')
+						isDefault ? this.prefs.getPref('network.cookie.cookieBehavior') :
+						(this.prefs.getPref(root+'.__permission__.cookie') === null ?
+							this.prefs.getPref('network.cookie.cookieBehavior') :
+							this.prefs.getPref(root+'.__permission__.cookie')
 						)
 						),
 
 				image   : (
-						isDefault ? this.getPref('permissions.default.image') :
-						(this.getPref(root+'.__permission__.image') === null ?
+						isDefault ? this.prefs.getPref('permissions.default.image') :
+						(this.prefs.getPref(root+'.__permission__.image') === null ?
 							0 :
-							this.getPref(root+'.__permission__.image')
+							this.prefs.getPref(root+'.__permission__.image')
 						)
 						),
 
 				popup   : (
-						isDefault ? (this.getPref('dom.disable_open_during_load') ? 0 : 1 ) :
-						(!this.getPref('dom.disable_open_during_load') ?
+						isDefault ? (this.prefs.getPref('dom.disable_open_during_load') ? 0 : 1 ) :
+						(!this.prefs.getPref('dom.disable_open_during_load') ?
 							1 :
-							(this.getPref(root+'.__permission__.popup') === null ?
+							(this.prefs.getPref(root+'.__permission__.popup') === null ?
 								0 :
-								this.getPref(root+'.__permission__.popup')
+								this.prefs.getPref(root+'.__permission__.popup')
 							)
 						)
 						),
 
 				install : (
-						isDefault ? (!this.getPref('xpinstall.enabled') ? -1 : 0 ) :
-						(!this.getPref('xpinstall.enabled') ?
+						isDefault ? (!this.prefs.getPref('xpinstall.enabled') ? -1 : 0 ) :
+						(!this.prefs.getPref('xpinstall.enabled') ?
 							0 :
-							(this.getPref(root+'.__permission__.install') === null ?
+							(this.prefs.getPref(root+'.__permission__.install') === null ?
 								0 :
-								this.getPref(root+'.__permission__.install')
+								this.prefs.getPref(root+'.__permission__.install')
 							)
 						)
 						),
 
 				localFileAccess : (
-							this.getPref(root+'.checkloaduri.enabled') || 'sameOrigin'
+							this.prefs.getPref(root+'.checkloaduri.enabled') || 'sameOrigin'
 						),
 
 				offlineApp : (
-						isDefault ? (!this.getPref('dom.storage.enabled') ? -1 : 0 ) :
-						(!this.getPref('dom.storage.enabled') ?
+						isDefault ? (!this.prefs.getPref('dom.storage.enabled') ? -1 : 0 ) :
+						(!this.prefs.getPref('dom.storage.enabled') ?
 							0 :
-							(this.getPref(root+'.__permission__.offline-app') === null ?
+							(this.prefs.getPref(root+'.__permission__.offline-app') === null ?
 								0 :
-								this.getPref(root+'.__permission__.offline-app')
+								this.prefs.getPref(root+'.__permission__.offline-app')
 							)
 						)
 						),
 
 				geo : (
 						isDefault ? 0 :
-						(this.getPref(root+'.__permission__.geo') === null ?
+						(this.prefs.getPref(root+'.__permission__.geo') === null ?
 							0 :
-							this.getPref(root+'.__permission__.geo')
+							this.prefs.getPref(root+'.__permission__.geo')
 						)
 						),
 
 				clipboard : (
 							(
-								this.getPref(root+'.Clipboard.paste') == 'allAccess' &&
-								this.getPref(root+'.Clipboard.cutcopy') == 'allAccess'
+								this.prefs.getPref(root+'.Clipboard.paste') == 'allAccess' &&
+								this.prefs.getPref(root+'.Clipboard.cutcopy') == 'allAccess'
 							) ? 'allAccess' : 'sameOrigin'
 						)
 			};
@@ -336,50 +336,50 @@ var PolicyService = {
 			var isDefault = (data.name == 'default');
 
 			if ('JSEnabled' in data.updated) {
-				if (typeof this.getPref(root+'.javascript.enabled') != 'string')
-					this.clearPref(root+'.javascript.enabled');
+				if (typeof this.prefs.getPref(root+'.javascript.enabled') != 'string')
+					this.prefs.clearPref(root+'.javascript.enabled');
 
-				this.setPref(root+'.javascript.enabled', data.updated.JSEnabled);
+				this.prefs.setPref(root+'.javascript.enabled', data.updated.JSEnabled);
 			}
 
 			if ('cookie' in data.updated) {
 				if (isDefault)
-					this.setPref('network.cookie.cookieBehavior', parseInt(data.updated.cookie));
+					this.prefs.setPref('network.cookie.cookieBehavior', parseInt(data.updated.cookie));
 				else
 					this.setPermissionFor(aPolicy, 'cookie', data.updated.cookie);
 			}
 
 			if ('image' in data.updated) {
 				if (isDefault)
-					this.setPref('permissions.default.image', parseInt(data.updated.image));
+					this.prefs.setPref('permissions.default.image', parseInt(data.updated.image));
 				else
 					this.setPermissionFor(aPolicy, 'image', data.updated.image);
 			}
 
 			if ('popup' in data.updated) {
 				if (isDefault)
-					this.setPref('dom.disable_open_during_load', data.updated.popup != 1);
+					this.prefs.setPref('dom.disable_open_during_load', data.updated.popup != 1);
 				else
 					this.setPermissionFor(aPolicy, 'popup', data.updated.popup);
 			}
 
 			if ('install' in data.updated) {
 				if (isDefault)
-					this.setPref('xpinstall.enabled', data.updated.install != -1);
+					this.prefs.setPref('xpinstall.enabled', data.updated.install != -1);
 				else
 					this.setPermissionFor(aPolicy, 'install', data.updated.install);
 			}
 
 			if ('localFileAccess' in data.updated) {
-				if (typeof this.getPref(root+'.checkloaduri.enabled') != 'string')
-					this.clearPref(root+'.checkloaduri.enabled');
+				if (typeof this.prefs.getPref(root+'.checkloaduri.enabled') != 'string')
+					this.prefs.clearPref(root+'.checkloaduri.enabled');
 
-				this.setPref(root+'.checkloaduri.enabled', data.updated.localFileAccess);
+				this.prefs.setPref(root+'.checkloaduri.enabled', data.updated.localFileAccess);
 			}
 
 			if ('offlineApp' in data.updated) {
 				if (isDefault)
-					this.setPref('dom.storage.enabled', data.updated.offlineApp != -1);
+					this.prefs.setPref('dom.storage.enabled', data.updated.offlineApp != -1);
 				else
 					this.setPermissionFor(aPolicy, 'offline-app', data.updated.offlineApp);
 			}
@@ -391,13 +391,13 @@ var PolicyService = {
 			}
 
 			if ('clipboard' in data.updated) {
-				this.setPref(root+'.Clipboard.cutcopy', data.updated.clipboard);
-				this.setPref(root+'.Clipboard.paste', data.updated.clipboard);
+				this.prefs.setPref(root+'.Clipboard.cutcopy', data.updated.clipboard);
+				this.prefs.setPref(root+'.Clipboard.paste', data.updated.clipboard);
 			}
 
 
 			if ('JSMode' in data.updated)
-				this.setPref(root+'.__JSPermission__', data.updated.JSMode);
+				this.prefs.setPref(root+'.__JSPermission__', data.updated.JSMode);
 
 			if ('JS' in data.updated)
 				for (var i in data.updated.JS)
@@ -426,7 +426,7 @@ var PolicyService = {
 		for (var i in prefs)
 		{
 			try {
-				this.clearPref(prefs[i]);
+				this.prefs.clearPref(prefs[i]);
 			}
 			catch(e) {
 	//			alert(e+'\n\n'+prefs[i]);
@@ -454,7 +454,7 @@ var PolicyService = {
 
 		var base = 'capability.policy.'+encodeURIComponent(aPolicy)+'.';
 		for (var i in prefs)
-			if (this.getPref(base+prefs[i]) != 'noAccess') {
+			if (this.prefs.getPref(base+prefs[i]) != 'noAccess') {
 				enabled = true;
 				break;
 			}
@@ -470,10 +470,10 @@ var PolicyService = {
 		var prefs = this.JSPrefs[aType].split(/ /),
 			current;
 
-		var value = aAllow ? (this.getPref('capability.policy.'+encodeURIComponent(aPolicy)+'.__JSPermission__') ||  'sameOrigin') : 'noAccess' ;
+		var value = aAllow ? (this.prefs.getPref('capability.policy.'+encodeURIComponent(aPolicy)+'.__JSPermission__') ||  'sameOrigin') : 'noAccess' ;
 		var base = 'capability.policy.'+encodeURIComponent(aPolicy)+'.';
 		for (var i in prefs)
-			this.setPref(base+prefs[i], value);
+			this.prefs.setPref(base+prefs[i], value);
 	},
  
 	// ポリシーの追加 
@@ -528,50 +528,50 @@ var PolicyService = {
 		this.setPermissionFor(
 			aPolicy,
 			'cookie',
-			(this.getPref(root+'.__permission__.cookie') === null ?
+			(this.prefs.getPref(root+'.__permission__.cookie') === null ?
 				this.DEFAULT :
-				this.getPref(root+'.__permission__.cookie') ),
+				this.prefs.getPref(root+'.__permission__.cookie') ),
 			aSite
 		);
 		this.setPermissionFor(
 			aPolicy,
 			'image',
-			(this.getPref(root+'.__permission__.image') === null ?
+			(this.prefs.getPref(root+'.__permission__.image') === null ?
 				this.DEFAULT :
-				this.getPref(root+'.__permission__.image') ),
+				this.prefs.getPref(root+'.__permission__.image') ),
 			aSite
 		);
 		this.setPermissionFor(
 			aPolicy,
 			'popup',
-			(this.getPref(root+'.__permission__.popup') === null ?
+			(this.prefs.getPref(root+'.__permission__.popup') === null ?
 				this.DEFAULT :
-				this.getPref(root+'.__permission__.popup') ),
+				this.prefs.getPref(root+'.__permission__.popup') ),
 			aSite
 		);
 		this.setPermissionFor(
 			aPolicy,
 			'install',
-			(this.getPref(root+'.__permission__.install') === null ?
+			(this.prefs.getPref(root+'.__permission__.install') === null ?
 				this.DEFAULT :
-				this.getPref(root+'.__permission__.install') ),
+				this.prefs.getPref(root+'.__permission__.install') ),
 			aSite
 		);
 		this.setPermissionFor(
 			aPolicy,
 			'offline-app',
-			(this.getPref(root+'.__permission__.offline-app') === null ?
+			(this.prefs.getPref(root+'.__permission__.offline-app') === null ?
 				this.DEFAULT :
-				this.getPref(root+'.__permission__.offline-app') ),
+				this.prefs.getPref(root+'.__permission__.offline-app') ),
 			aSite
 		);
 		if (this.isAvailableGeolocation)
 			this.setPermissionFor(
 				aPolicy,
 				'geo',
-				(this.getPref(root+'.__permission__.geo') === null ?
+				(this.prefs.getPref(root+'.__permission__.geo') === null ?
 					this.DEFAULT :
-					this.getPref(root+'.__permission__.geo') ),
+					this.prefs.getPref(root+'.__permission__.geo') ),
 				aSite
 			);
 
@@ -601,7 +601,7 @@ var PolicyService = {
 	// ポリシーを適用するドメインを得る 
 	getSitesForPolicy : function(aPolicy)
 	{
-		var array = (this.getPref('capability.policy.'+encodeURIComponent(aPolicy)+'.sites') || '').split(/[,|]| +/);
+		var array = (this.prefs.getPref('capability.policy.'+encodeURIComponent(aPolicy)+'.sites') || '').split(/[,|]| +/);
 		array.sort();
 		return array;
 	},
@@ -614,7 +614,7 @@ var PolicyService = {
 		var sites = aSite ? [aSite] : this.getSitesForPolicy(aPolicy) ;
 
 		if (aPolicy)
-			this.setPref('capability.policy.'+encodeURIComponent(aPolicy)+'.__permission__.'+aType, parseInt(aFlag));
+			this.prefs.setPref('capability.policy.'+encodeURIComponent(aPolicy)+'.__permission__.'+aType, parseInt(aFlag));
 
 		if (!sites.length) return;
 
@@ -693,5 +693,5 @@ var PolicyService = {
   
 	___ : null 
 };
-PolicyService.__proto__ = window['piro.sakura.ne.jp'].prefs;
+PolicyService.prefs = window['piro.sakura.ne.jp'].prefs;
   
