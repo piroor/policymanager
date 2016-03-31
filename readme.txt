@@ -1,3 +1,7 @@
+**Iportant note**:
+This project was completely obsolete because Firefox does not support security models based on plicies  anymore.
+Use site-specific permissions instead.
+For enterprise use, [autopermission](https://github.com/clear-code/autopermission) will help you.
 
 ========================================================================
                   ポリシーマネージャ for Mozilla Firefox
