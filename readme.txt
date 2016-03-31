@@ -1,181 +1,182 @@
+
 ========================================================================
-                  �|���V�[�}�l�[�W�� for Mozilla Firefox
+                  ポリシーマネージャ for Mozilla Firefox
 ========================================================================
-[����       ] �|���V�[�}�l�[�W�� for Mozilla Firefox
-[�o�[�W���� ] 2.0.2005110601
-[���       ] �t���[�\�t�g�E�F�A
-[�����     ] Piro(���c �m�u)
-[�ŏI�X�V   ] 2005/11/6
-[���k�`��   ] LHA
-[�����   ] Mozilla Firefix 1.0 �ȏオ���삷����B
-              �����ł�Windows 2000��ŁAMozilla Firefox 1.0.6�ɂē����
-              �m�F���s���Ă��܂��B
+[名称       ] ポリシーマネージャ for Mozilla Firefox
+[バージョン ] 2.0.2005110601
+[種別       ] フリーソフトウェア
+[制作者     ] Piro(下田 洋志)
+[最終更新   ] 2005/11/6
+[圧縮形式   ] LHA
+[動作環境   ] Mozilla Firefix 1.0 以上が動作する環境。
+              当方ではWindows 2000上で、Mozilla Firefox 1.0.6にて動作の
+              確認を行っています。
 
-[�]��/�Ĕz�z] ���f�]�ځE�Ĕz�z�͎��R�ɍs���Ă��������č\���܂���B������
-              �����̂����J���邱�Ƃ��������܂���B�������N���W�b�g�͌���
-              ���̂��c���悤�ɂ��Ă��������B
-              ���̃p�b�P�[�W�Ɋ܂܂��R�[�h�̖w�ǂ� MPL 1.1, GPL 2.0,
-              ����� LGPL 2.1 �̃g���v�����C�Z���X�ƂȂ��Ă��܂��̂ŁA
-              �����̓_�ɂ��ẮA���ꂼ��̃��C�Z���X�̏����ɏ]���ĉ�
-              �����B
-              �Ȃ��A���Ђ̕t�^CD-ROM��\�t�g�E�F�A���֎��^���Ă���������
-              �ꍇ�́A�K�����O�ɂ��A���������B
+[転載/再配布] 無断転載・再配布は自由に行っていただいて構いません。改造し
+              たものを公開することも制限しません。ただしクレジットは元の
+              ものを残すようにしてください。
+              このパッケージに含まれるコードの殆どは MPL 1.1, GPL 2.0,
+              および LGPL 2.1 のトリプルライセンスとなっていますので、
+              これらの点については、それぞれのライセンスの条件に従って下
+              さい。
+              なお、書籍の付録CD-ROMやソフトウェア等へ収録していただける
+              場合は、必ず事前にご連絡下さい。
 
-[���쌠     ] ���̃p�b�P�[�W�Ɋ܂܂��v���O�����̒��쌠��Piro(���c �m
-              �u)���ۗL���܂��B�����B
-              �Ă������v���O�����ɒ��쌠���ĔF�߂���񂾂����H ������
-              UI��XML�����B�����C���X�^���X�̃}�[�N�A�b�v�ɒ��쌠�͔���
-              ���Ȃ��Ƃ����̂����̌����������悤�ȋC���c�c
+[著作権     ] このパッケージに含まれるプログラムの著作権はPiro(下田 洋
+              志)が保有します。多分。
+              ていうかプログラムに著作権って認められるんだっけ？ しかも
+              UIはXMLだし。文書インスタンスのマークアップに著作権は発生
+              しないというのが公の見解だったような気も……
 
-[�A����     ] piro.outsider.reflex@gmail.com
-[�z�z��     ] http://piro.sakura.ne.jp/
+[連絡先     ] piro.outsider.reflex@gmail.com
+[配布元     ] http://piro.sakura.ne.jp/
               http://hp.vector.co.jp/authors/VA016061/
 
 
 ========================================================================
-���ڎ�
+＊目次
 
-  �E�w�b�_
-  �E�ڎ�
-  �E�t�@�C���\��
-  �E�Љ�
-  �E�C���X�g�[���菇
-  �E�ӎ�
-  �E�Ɛ�
-  �E�X�V�����i�����j
-
-
-========================================================================
-���t�@�C���\��
-
-  �Ereadme.txt       : �戵����(���̃t�@�C��)
-  �Epolicymanager.xpi: XPInstall Package�{��
-
- ���ǂ�����A�C���X�g�[����͍폜���Ă��܂��܂���B
+  ・ヘッダ
+  ・目次
+  ・ファイル構成
+  ・紹介
+  ・インストール手順
+  ・謝辞
+  ・免責
+  ・更新履歴（抜粋）
 
 
 ========================================================================
-���Љ�
+＊ファイル構成
 
-Mozilla Firefox�ŁA�T�C�g�|���V�[�iIE�̃Z�L�����e�B�]�[���̂悤��
-���́j���Ǘ�����g���@�\�ł��B
-�T�C�g�|���V�[�̋@�\���̂�Firefox�ɂ͊��Ɏ�������Ă��܂����A UI �͂܂���
-��܂���B���̃p�b�P�[�W�ɂ́A�l������ɍ�����|���V�[�Ǘ��p�_�C�A���O
-�ƁA�R���e�L�X�g���j���[���炻�̃T�C�g�p�̃|���V�[����y�ɐݒ肷�邽�߂�
-�@�\���܂܂�Ă��܂��B
+  ・readme.txt       : 取扱説明(このファイル)
+  ・policymanager.xpi: XPInstall Package本体
+
+ ※どちらも、インストール後は削除してかまいません。
 
 
 ========================================================================
-���C���X�g�[���菇
+＊紹介
+
+Mozilla Firefoxで、サイトポリシー（IEのセキュリティゾーンのような
+もの）を管理する拡張機能です。
+サイトポリシーの機能自体はFirefoxには既に実装されていますが、 UI はまだあ
+りません。このパッケージには、僕が勝手に作ったポリシー管理用ダイアログ
+と、コンテキストメニューからそのサイト用のポリシーを手軽に設定するための
+機能が含まれています。
+
+
+========================================================================
+＊インストール手順
 
   +-----------------------------------------------------------------+
-  | ���C���X�g�[�����s���O�ɁAPreferences�i�ݒ�j >                 |
-  |   Advanced�i�ڍׁj > Software Installation�i�\�t�g�E�F�A�̃C    |
-  |   ���X�g�[���j�ŁuEnable software installation�i�\�t�g�E�F�A    |
-  |   �̃C���X�g�[�����\�ɂ���j�v�Ƀ`�F�b�N�����ĉ������B      |
+  | ※インストールを行う前に、Preferences（設定） >                 |
+  |   Advanced（詳細） > Software Installation（ソフトウェアのイ    |
+  |   ンストール）で「Enable software installation（ソフトウェア    |
+  |   のインストールを可能にする）」にチェックを入れて下さい。      |
   +-----------------------------------------------------------------+
 
-step1: �t�@�C���̃R�s�[
-  policymanager.xpi���u���E�U�̃E�B���h�E�Ƀh���b�v����ƁA�C���X�g�[��
-  ���J�n����܂��B
+step1: ファイルのコピー
+  policymanager.xpiをブラウザのウィンドウにドロップすると、インストール
+  が開始されます。
 
-step2: NS/Moz�̍ċN��
-  �t�@�C���̃R�s�[���I�������AFirefox���ċN�����܂��B
-  �R�s�[�����t�@�C���Q���A�N������Firefox�ɓo�^����܂��B
-
-
-========================================================================
-���ӎ�
-
-���̃p�b�P�[�W�����J����ɂ�����A�p�ꕶ�@�̖ʂŎw�E������������
-timeless���ɐ[�����ӂ������܂��B
+step2: NS/Mozの再起動
+  ファイルのコピーが終わったら、Firefoxを再起動します。
+  コピーしたファイル群が、起動時にFirefoxに登録されます。
 
 
 ========================================================================
-���Ɛ�
+＊謝辞
 
-���̃p�b�P�[�W���g�p�������ɂ�蔭�����������Ȃ��Q�ɑ΂��Ă��A�����
-�͈�؂̐ӔC�������܂���B�S�Ďg�p�҂̌l�̐ӔC�Ɋ�Â����̂Ƃ��܂��B
+このパッケージを公開するにあたり、英語文法の面で指摘をいただいた
+timeless氏に深く感謝いたします。
 
 
 ========================================================================
-���X�V�����i�����j
+＊免責
 
-����ȑO�̗����͔z�z���̃y�[�W���Q�Ƃ��Ă��������B
+このパッケージを使用した事により発生したいかなる障害に対しても、制作者
+は一切の責任を持ちません。全て使用者の個人の責任に基づくものとします。
+
+
+========================================================================
+＊更新履歴（抜粋）
+
+これ以前の履歴は配布元のページを参照してください。
 
 2.0.2005110601
-    �E�|���V�[�ݒ��JavaScript�̗L��������؂�ւ��Ă�GUI�ł͏�ɗL����
-      ���ĕ\������Ă����̂��C��
+    ・ポリシー設定でJavaScriptの有効無効を切り替えてもGUIでは常に有効と
+      して表示されていたのを修正
 2.0.20051011
-    �EJavaScript���O���[�o���ݒ�Ŗ����ɂ��Ȃ���ʂ̃|���V�[�ݒ�ŗL
-      ���ɂł���悤�ɂ����i���e�|���V�[�̍Đݒ肪�K�v�j
+    ・JavaScriptをグローバル設定で無効にしながら個別のポリシー設定で有
+      効にできるようにした（※各ポリシーの再設定が必要）
 2.0.20050918
-    �E�C���^�[�t�F�[�X�����V���AFirefox�Ő���ɋ@�\����悤�ɂ���
+    ・インターフェースを刷新し、Firefoxで正常に機能するようにした
 1.3.20040818
-    �EFirefox 1.0.3�œ��삵�Ȃ������C��
-    �EFirefox��Tools���j���[�Ƀ|���V�[�}�l�[�W���̍��ڂ�\������悤��
-      ����
+    ・Firefox 1.0.3で動作しない問題を修正
+    ・FirefoxでToolsメニューにポリシーマネージャの項目を表示するように
+      した
 1.3.20040523
-    �Ewindow.top���ϐ��ɂȂ��Ă��鎞�ɃG���[���N����\�����������̂�
-      �C��
+    ・window.topが変数になっている時にエラーが起こる可能性があったのを
+      修正
 1.3.20040204
-    �E�`�F�b�N�{�b�N�X�̏������C��
+    ・チェックボックスの処理を修正
 1.3.20030604
-    �E���{��p�b�N�̃{�^���������������Ȃ��Ă����̂��C��
-    �ENS7��Â�Mozilla�ł̓|�b�v�A�b�v�֎~�̃`�F�b�N�{�b�N�X�𖳌��ɂ�
-      ��悤�ɂ���
+    ・日本語パックのボタン名がおかしくなっていたのを修正
+    ・NS7や古いMozillaではポップアップ禁止のチェックボックスを無効にす
+      るようにした
 1.3.20030413
-    �E�v���t�@�C���f�B���N�g����overlays.rdf�ɃS�~���c���Ȃ��悤�ɂ���
-      �i���[�U�[�ʂɃC���X�g�[��������ŃA���C���X�g�[�����Ǘ��Ҍ�����
-        �ăC���X�g�[�������ꍇ�ɓ��삵�Ȃ����̑Ώ��j
+    ・プロファイルディレクトリのoverlays.rdfにゴミを残さないようにした
+      （ユーザー別にインストールした後でアンインストールし管理者権限で
+        再インストールした場合に動作しない問題の対処）
 1.3.20030405
-    �E�A���C���X�g�[���̃~�X���C��
+    ・アンインストーラのミスを修正
 1.3.20030317
-    �E�R���e�L�X�g���j���[�̏������ŃG���[���N�������Ƃ��������̂��C��
-    �E�|�b�v�A�b�v�̐�����ꉞ�s����悤�ɂ���
+    ・コンテキストメニューの初期化でエラーを起こすことがあったのを修正
+    ・ポップアップの制御も一応行えるようにした
 1.2.20021004
-    �EPhoenix�ւ̑Ή����ڂڂJ�n
+    ・Phoenixへの対応をぼつぼつ開始
 1.2.20020929
-    �Ejavascript.enabled�������Ȏ��AJavaScript�̐ݒ�p�̃`�F�b�N�{�b�N
-      �X��S�Ė����ɂ���悤�ɂ���
-    �E***.javascript.enabled�̐ݒ���ԈႦ�Ă����̂��C��
-    �E�`�F�b�N�{�b�N�X���@�\���Ȃ������C��
+    ・javascript.enabledが無効な時、JavaScriptの設定用のチェックボック
+      スを全て無効にするようにした
+    ・***.javascript.enabledの設定を間違えていたのを修正
+    ・チェックボックスが機能しない問題を修正
 1.1.20020928
-    �EArray��concat�Ńm�[�h���X�g������Ȃ��悤�ɂ���
+    ・Arrayのconcatでノードリストを扱わないようにした
 1.1.20020925
-    �E���ȃA���C���X�g�[���@�\�������Ȃ������C��
+    ・自己アンインストール機能が働かない問題を修正
 1.1.20020918
-    �E���ȃA���C���X�g�[���@�\��Mozilla1.2a�ȍ~�œ����Ȃ������C��
+    ・自己アンインストール機能がMozilla1.2a以降で働かない問題を修正
 1.1.20020830
-    �E���ȃA���C���X�g�[���@�\��ǉ�
+    ・自己アンインストール機能を追加
 1.1.20020809
-    �EnsISupports(W)String�֌W�̎d�l�̕ύX�ɑΉ�
+    ・nsISupports(W)String関係の仕様の変更に対応
 1.1.20020709
-    �E�p��̃��j���[�\�L���������C��
-    �E�|���V�[���u�ǉ��v�u�폜�v����A�|���V�[���u�V�K�v�u�폜�v�ɕ\����
-      ���߂�
+    ・英語のメニュー表記をいくつか修正
+    ・ポリシーを「追加」「削除」から、ポリシーを「新規」「削除」に表現を
+      改めた
 1.1.20020628
-    �EMozilla 1.0 �ȍ~�ł�"@mozilla.org/rdf/datasource;1?name=window-
-      mediator"�̑����"@mozilla.org/appshell/window-mediator;1"���g��
-      �悤�ɂ���
+    ・Mozilla 1.0 以降では"@mozilla.org/rdf/datasource;1?name=window-
+      mediator"の代わりに"@mozilla.org/appshell/window-mediator;1"を使う
+      ようにした
 1.1.20020519
-    �E�R�[�h�𐮗�
+    ・コードを整理
 1.1.20020518
-    �EJavaScript �̗L���������ꊇ���Đݒ�ł���悤�ɂ���
-    �EJavaScript �̃v���p�e�B�̃Z�L�����e�B���x�����A allAccess �ɂ��邩
-      sameOrigin �ɂ��邩�I���ł���悤�ɂ���
+    ・JavaScript の有効無効を一括して設定できるようにした
+    ・JavaScript のプロパティのセキュリティレベルを、 allAccess にするか
+      sameOrigin にするか選択できるようにした
 1.0.20020517
-    �E�������Ɏ��s���Ă����̂��C��
+    ・初期化に失敗していたのを修正
 1.0.20020514
-    �E��`�t�@�C���̋L�q�~�X���C��
+    ・定義ファイルの記述ミスを修正
 1.0.20020511
-    �EJavaScript �ɂ��C�x���g�̕ߑ��𐧌��ł���悤�ɂ���
+    ・JavaScript によるイベントの捕捉を制限できるようにした
 1.0.20020425
-    �E�����C��
-    �E�u�}�l�[�W���[�v�Ƃ����\�L���u�}�l�[�W���v�ɕύX
-    �EsetInterval, setTimeout ���R���g���[���ł���悤�ɂ���
+    ・少し修正
+    ・「マネージャー」という表記を「マネージャ」に変更
+    ・setInterval, setTimeout をコントロールできるようにした
 1.0.20020424
-    �E���J
+    ・公開
 
 
 ------------------------------------------------------------------------
